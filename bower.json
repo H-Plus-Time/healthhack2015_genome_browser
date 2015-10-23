@@ -19,6 +19,7 @@
   "dependencies": {
     "autobahnjs": "autobahn#~0.9.8",
     "iron-elements": "PolymerElements/iron-elements#~1.0.4",
-    "paper-elements": "PolymerElements/paper-elements#~1.0.5"
+    "paper-elements": "PolymerElements/paper-elements#~1.0.5",
+    "resumable.js": "resumablejs#~1.0.2"
   }
 }
