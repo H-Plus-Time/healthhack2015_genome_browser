@@ -1,9 +1,9 @@
 # healthhack2015_genome_browser
 
 ##Dependencies
-nodejs
-bower
+* nodejs
+* bower
 
 ## Setup Instructions
-bower update
-python -m SimpleHTTPServer &
+  bower update
+  python -m SimpleHTTPServer &
