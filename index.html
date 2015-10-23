@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/iron-pages/iron-pages.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+  <script src="bower_components/autobahnjs/autobahn.min.js"></script>
+      <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+  </head>
+  <body unrespolved fullbleed layout vertical>
+  <template is="dom-bind" id="t">
+    <paper-tabs selected="{{selected}}" style="background-color:#673AB7">
+      <paper-tab style="color:#fff;font-weight:900">Landing Page</paper-tab>
+      <paper-tab style="color:#fff;font-weight:900">Reference Genome</paper-tab>
+      <paper-tab style="color:#fff;font-weight:900">BED Annotation</paper-tab>
+    </paper-tabs>
+    <iron-pages selected="{{selected}}">
+      <div class="vertical layout justified">
+          <center>
+        <paper-button>Upload Reference Genome</paper-button>
+        <paper-button>Upload BED Annotation File</paper-button>
+        </center>
+      </div>
+      <div>
+          <paper-progress></paper-progress>
+          <center>
+          <div class="vertical layout" style="width:20%">
+              <form>
+          
+          <paper-input label="metadata 1"></paper-input>
+          <paper-input label="metadata 2"></paper-input>
+          <paper-input label="metadata 3"></paper-input>
+              <paper-button>Upload</paper-button>
+              </form>
+          </div>
+              </center>
+          
+          
+      </div>
+      <div>
+        BED Annotation details
+      </div>
+    </iron-pages>
+  </template>
+  </body>
+    <script src="index.js"></script>
+</html>
+

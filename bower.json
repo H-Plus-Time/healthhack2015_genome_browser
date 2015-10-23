@@ -1,0 +1,24 @@
+{
+  "name": "healthhack2015_genome_browser",
+  "main": "index.html",
+  "homepage": "https://github.com/NicholasRoberts/healthhack2015_genome_browser",
+  "authors": [
+    "Nicholas Roberts <Nicholas.Roberts.au@gmail.com>"
+  ],
+  "description": "",
+  "moduleType": [],
+  "license": "CC BY",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "autobahnjs": "autobahn#~0.9.8",
+    "iron-elements": "PolymerElements/iron-elements#~1.0.4",
+    "paper-elements": "PolymerElements/paper-elements#~1.0.5"
+  }
+}
