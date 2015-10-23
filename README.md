@@ -5,5 +5,7 @@
 * bower
 
 ## Setup Instructions
+```bash
   bower update
   python -m SimpleHTTPServer &
+```
