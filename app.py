@@ -1,4 +1,4 @@
-
+from Bio import Entrez
 
 class GenomeBrowser(ApplicationSession):
 
@@ -23,4 +23,8 @@ class GenomeBrowser(ApplicationSession):
 
         def upload_bed(file_payload):
             pass
-
+        
+        def fetch_taxon_id(taxonomy_name):
+            handle = Entrez.esearch(db="taxonomy", term=taxonomy_name)
+            record = Entrez.read(handle)
+            return record['IdList'][0]
