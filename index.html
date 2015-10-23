@@ -7,23 +7,28 @@
     <link rel="import" href="bower_components/paper-button/paper-button.html">
     <link rel="import" href="bower_components/iron-pages/iron-pages.html">
     <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
   <script src="bower_components/autobahnjs/autobahn.min.js"></script>
       <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
   </head>
   <body unrespolved fullbleed layout vertical>
   <template is="dom-bind" id="t">
       <div>
+          <paper-toolbar><center><div>Working Title</div></center>Testing</paper-toolbar>
           <paper-progress></paper-progress>
           <center>
-          <div class="vertical layout" style="width:20%">
-              <form>
           
-          <paper-input label="metadata 1"></paper-input>
+              <form>
+          <div class="vertical layout" style="width:20%">
+          <paper-input label="Source Species"></paper-input>
           <paper-input label="metadata 2"></paper-input>
           <paper-input label="metadata 3"></paper-input>
-              <paper-button>Upload</paper-button>
+              <paper-button style="background-color:#F50057;margin:3px">Upload FASTA</paper-button>
+                  <paper-button style="background-color:#F50057;margin:3px">Upload BED</paper-button>
+                  <paper-button style="background-color:#F50057;margin:3px">Upload RA</paper-button>
+            </div>
               </form>
-          </div>
+          
               </center>
           
           
