@@ -12,18 +12,6 @@
   </head>
   <body unrespolved fullbleed layout vertical>
   <template is="dom-bind" id="t">
-    <paper-tabs selected="{{selected}}" style="background-color:#673AB7">
-      <paper-tab style="color:#fff;font-weight:900">Landing Page</paper-tab>
-      <paper-tab style="color:#fff;font-weight:900">Reference Genome</paper-tab>
-      <paper-tab style="color:#fff;font-weight:900">BED Annotation</paper-tab>
-    </paper-tabs>
-    <iron-pages selected="{{selected}}">
-      <div class="vertical layout justified">
-          <center>
-        <paper-button>Upload Reference Genome</paper-button>
-        <paper-button>Upload BED Annotation File</paper-button>
-        </center>
-      </div>
       <div>
           <paper-progress></paper-progress>
           <center>
@@ -40,10 +28,6 @@
           
           
       </div>
-      <div>
-        BED Annotation details
-      </div>
-    </iron-pages>
   </template>
   </body>
     <script src="index.js"></script>
