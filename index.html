@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
+<head>
   <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-    <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
-    <link rel="import" href="bower_components/paper-button/paper-button.html">
-    <link rel="import" href="bower_components/iron-pages/iron-pages.html">
-    <link rel="import" href="bower_components/paper-input/paper-input.html">
-    <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="bower_components/paper-button/paper-button.html">
+  <link rel="import" href="bower_components/iron-pages/iron-pages.html">
+  <link rel="import" href="bower_components/paper-input/paper-input.html">
+  <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
   <script src="bower_components/autobahnjs/autobahn.min.js"></script>
-      <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
-  </head>
-  <body unrespolved fullbleed layout vertical>
-  <template is="dom-bind" id="t">
-      <div>
-          <paper-toolbar><center><div>Working Title</div></center>Testing</paper-toolbar>
-          <paper-progress></paper-progress>
-          <center>
-          
-              <form>
-          <div class="vertical layout" style="width:20%">
-          <paper-input label="Source Species"></paper-input>
-          <paper-input label="metadata 2"></paper-input>
-          <paper-input label="metadata 3"></paper-input>
-              <paper-button style="background-color:#F50057;margin:3px">Upload FASTA</paper-button>
-                  <paper-button style="background-color:#F50057;margin:3px">Upload BED</paper-button>
-                  <paper-button style="background-color:#F50057;margin:3px">Upload RA</paper-button>
-            </div>
-              </form>
-          
-              </center>
-          
-          
-      </div>
-  </template>
-  </body>
-    <script src="index.js"></script>
-</html>
+  <script src="bower_components/resumablejs/resumable.js"></script>
+  <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+</head>
 
+<body unrespolved fullbleed layout vertical>
+  <template is="dom-bind" id="t">
+    <div>
+      <paper-tabs selected="{{selected}}">
+        <paper-tab></paper-tab>
+        <paper-tab></paper-tab>
+      </paper-tabs>
+      <paper-progress value="{{progress}}"></paper-progress>
+      <iron-pages>
+          <div class="vertical layout center">
+            <paper-input label="Source Species"></paper-input>
+            <paper-input label="metadata 2"></paper-input>
+            <paper-input label="metadata 3"></paper-input>
+            <paper-button style="background-color:#F50057;margin:3px">Upload FASTA</paper-button>
+            <paper-button style="background-color:#F50057;margin:3px">Upload BED</paper-button>
+            <paper-button style="background-color:#F50057;margin:3px">Upload RA</paper-button>
+          </div>
+      </iron-pages>
+
+
+    </div>
+  </template>
+</body>
+<script src="index.js"></script>
+
+</html>
