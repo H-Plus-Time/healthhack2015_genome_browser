@@ -49,11 +49,7 @@
                   "max_file_size": 200000000,
                   "file_permissions": "0644",
                   "file_types": [
-                     ".txt",
-                     ".ra",
-                     ".fa",
-                     ".fasta",
-                     ".bed"
+                     ".*"
                   ]
                }
             }

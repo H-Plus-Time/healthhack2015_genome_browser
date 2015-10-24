@@ -23,7 +23,7 @@ class GenomeBrowser(ApplicationSession):
         Base = automap_base()
         Base.prepare(engine, reflect=True)
         Session = sessionmaker(bind=engine)
-        db = Session()
+        self.db = Session()
         self.Genome = Base.classes.defaultDb
         Entrez.email = 'nicholas.roberts.au@gmail.com'
         pass
@@ -53,7 +53,7 @@ class GenomeBrowser(ApplicationSession):
             return record['IdList'][0]
         
         def fetch_genomes():
-            genomes = map(lambda x: [x.name, x.genome], db.query(self.Genome).all())
+            genomes = map(lambda x: [x.name, x.genome], self.db.query(self.Genome).all())
             return genomes
             
         self.register(fetch_genomes, 'com.gb.fetch_genomes')
