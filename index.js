@@ -5,13 +5,33 @@ var connection = new autobahn.Connection({
 
 
 connection.onopen = function(session) {
-    
+
 //  uploadFasta = document.getElementById('uploadFasta');
-//  uploadBED = document.getElementById('uploadBED');  
+//  uploadBED = document.getElementById('uploadBED');
 //  uploadRa = document.getElementById('uploadRa');
     uploadButton = document.getElementById('uploadButton');
     landingAnnotation = document.getElementById('landingAnnotation');
     genomeTemplate = document.getElementById('genomeTemplate');
+    speciesInput = document.getElementById('species_input');
+    genusInput = document.getElementById('genus_input');
+    document.checkSpecies = function() {
+      session.call('com.gb.taxon_search', [template.genusVal + ' ' + template.speciesVal]).then(
+        function(res) {
+          console.log(res);
+          if(res != -1) {
+            speciesCheckInd.icon = 'done';
+            template.taxon_ID = res.toString();
+
+          } else {
+            speciesCheckInd.icon = 'warning';
+          }
+        },
+        function(err) {
+          console.log(err);
+        }
+      );
+    }
+
     landingAnnotation.addEventListener('click', function(e) {
     	template.selected = 3;
 	template.subselected = 0;
@@ -22,7 +42,7 @@ connection.onopen = function(session) {
 	template.subselected = 1;
     });
    template = document.getElementById('t');
-    
+
   console.log("Connected", session.details);
   templateWrapper = document.getElementById('templatewrapper');
   genomeTemplate = templateWrapper.querySelector('template');
@@ -37,7 +57,7 @@ connection.onopen = function(session) {
       );
     }
   setInterval(ping, 1000);
-    
+
   session.call('com.gb.fetch_genomes').then(
       function(res) {
           console.log(res);
@@ -93,15 +113,15 @@ connection.onopen = function(session) {
   }
 
   upload_reference_genome = function() {}
-  
-  session.call('com.gb.taxon_search', ['drosophila birchii']).then(
-      function(res) {
-          console.log(res);
-      },
-      function(err) {
-          console.log(err);
-      }
-  );
+
+  // session.call('com.gb.taxon_search', ['drosophila birchii']).then(
+  //     function(res) {
+  //         console.log(res);
+  //     },
+  //     function(err) {
+  //         console.log(err);
+  //     }
+  // );
 }
 
 
@@ -123,7 +143,7 @@ document.addEventListener('WebComponentsReady', function() {
           history.pushState(null, null, '');
           alert('Back navigation is disabled on this page. Use the tabs.');
       });
-    
+
     document.getGenomeDetails = function(genome) {
         genomeTemplate.annotations = genome.annotations;
         return templateWrapper.querySelector(".genomedetails").outerHTML;
@@ -139,31 +159,31 @@ document.addEventListener('WebComponentsReady', function() {
         });
 //        genomeGrid.clearCache(genomeTemplate.genomes.length);
     });
-        
-    genomeGrid.rowDetailsGenerator = function(rowIndex) {
-        var elem = document.createElement('div');
-        elem.setAttribute('class', 'featurenamedetailswrapper');
-        genomeGrid.getItem(rowIndex, function(error, item) {
-          console.log(item);
-          if (!error) {
-            console.log(item);
-            elem.innerHTML = document.getGenomeDetails(item);
-          }
-        });
 
-        return elem;
-      }
+    // genomeGrid.rowDetailsGenerator = function(rowIndex) {
+    //     var elem = document.createElement('div');
+    //     elem.setAttribute('class', 'featurenamedetailswrapper');
+    //     genomeGrid.getItem(rowIndex, function(error, item) {
+    //       console.log(item);
+    //       if (!error) {
+    //         console.log(item);
+    //         elem.innerHTML = document.getGenomeDetails(item);
+    //       }
+    //     });
+    //
+    //     return elem;
+    //   }
+    //
+    //   var gridDetailsOpenIndex = -1;
+    //
+    //   // Show details for the selected row
+    //   genomeGrid.addEventListener('select', function() {
+    //     genomeGrid.setRowDetailsVisible(gridDetailsOpenIndex, false);
+    //     var selected = genomeGrid.selection.selected();
+    //     if (selected.length == 1) {
+    //       genomeGrid.setRowDetailsVisible(selected[0], true);
+    //       detailsOpenIndex = selected[0];
+    //     }
+    //   });
 
-      var gridDetailsOpenIndex = -1;
-
-      // Show details for the selected row
-      genomeGrid.addEventListener('select', function() {
-        genomeGrid.setRowDetailsVisible(gridDetailsOpenIndex, false);
-        var selected = genomeGrid.selection.selected();
-        if (selected.length == 1) {
-          genomeGrid.setRowDetailsVisible(selected[0], true);
-          detailsOpenIndex = selected[0];
-        }
-      });
-  
 });

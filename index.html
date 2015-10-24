@@ -8,8 +8,12 @@
   <link rel="import" href="bower_components/iron-pages/iron-pages.html">
   <link rel="import" href="bower_components/paper-input/paper-input.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="bower_components/iron-icon/iron-icon.html">
+  <link href="bower_components/iron-icons/iron-icons.html" rel="import">
+  <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
   <link rel="import" href="bower_components/paper-card/paper-card.html">
   <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="bower_components/paper-input/paper-textarea.html">
   <script src="bower_components/autobahnjs/autobahn.min.js"></script>
   <script src="bower_components/resumable.js/resumable.js"></script>
   <link rel='import' href='bower_components/vaadin-grid/vaadin-grid.html'>
@@ -21,108 +25,141 @@
   <button id="uploadButton" style="display: none;"></button>
   <paper-toast id="toasty">{{toast_message}}</paper-toast>
   <div id="templatewrapper" style="display: none;">
-	<template is='dom-bind'>
-		<style>.seqdata {-webkit-flex: 1; flex: 1; max-height: 20px;}
-      .seqcolumn { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; }</style>
+    <template is='dom-bind'>
+      <style>
+        .seqdata {
+          -webkit-flex: 1;
+          flex: 1;
+          max-height: 20px;
+        }
+
+        .seqcolumn {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-direction: column;
+          flex-direction: column;
+        }
+      </style>
       <div class="sequencedetails" style="display: -webkit-flex; display: flex; height: 170px;">
-       <template repeat="{{anno in annotations}}">
-		<div class="horizontal layout">
-			<div>{{anno.name}}</div>
-		</div>
-	</template>
-	</div>
+        <template repeat="{{anno in annotations}}">
+          <div class="horizontal layout">
+            <div>{{anno.name}}</div>
+          </div>
+        </template>
       </div>
-	</template>
+  </div>
+  </template>
   </div>
   <template is="dom-bind" id="t">
     <div>
       <paper-progress value="{{progress}}"></paper-progress>
       <iron-pages selected="{{selected}}">
-          <div class="vertical layout fit center-justified">
-              <h1 class="self-center">Upload a Genome or add an annotation to an existing genome</h1>
-		<div class="horizontal layout center-justified">
-        
-		<paper-button id="landingAnnotation" style="background-color:#F50057;color:#fff">Add Annotation</paper-button>
-		<paper-button id="landingGenome" style="background-color:#F50057;;color:#fff">Upload Genome</paper-button>
-		</div>
-        
+        <div class="vertical layout fit center-justified">
+          <h1 class="self-center">Upload a Genome or add an annotation to an existing genome</h1>
+          <div class="horizontal layout center-justified">
 
-		
-	  </div>
-      <div class="vertical layout left">
-            <div class="horizontal layout around-justified">
-                <paper-button onclick="template.selected = 1">Genome Upload</paper-button>
-                <paper-button onclick="template.selected = 2">Genome Search</paper-button>
-                <paper-button onclick="template.selected = 3">Annotation Upload</paper-button>
-            </div>
-                <h1>Genome Upload</h1>
-                <h3>What is the genus and species name of the source organism? (e.g. <i>Drosophila, birchii</i>)</h3>
-            <div class="horizontal layout">
-                <paper-input floatingLabel label="Genus" style="margin-right:3px"></paper-input>  
-                <paper-input floatingLabel label="Species"></paper-input>  
-            </div>
-            <h3>What description would you like to use for this genome assembly? (e.g. 2014 assembly version 1, with ABySS)</h3>
-            <paper-input label="description"></paper-input>
-            <h3>What is the source of this genome assembly? (e.g. Genomic Basis for Adapption to Climate Change Project)</h3>
-            <paper-input label="Source"></paper-input>
-            <div>Default Display location</div>
-            <h3>Which scaffold should the browser default to?</h3>
-            <paper-input label="scaffold number"></paper-input>
-            <h3>What range of the scaffold should the browser default to? (e.g. 0-1000000)</h3>
-            <div class="horizontal layout">
-              <paper-input label="Start" type="number" style="margin-right:3px;width:100px"></paper-input>
-              <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
-            </div>
-            <h3>What is the taxonomy ID? (*optional)</h3>
-            <paper-input label="taxonomy ID"></paper-input>
-            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();">Select (*.fa/*.fasta)</paper-button>
-            <paper-button>Upload</paper-button>
+            <paper-button id="landingAnnotation" style="background-color:#F50057;color:#fff">Add Annotation</paper-button>
+            <paper-button id="landingGenome" style="background-color:#3F51B5;;color:#fff">Upload Genome</paper-button>
           </div>
-          
-          <div class="vertical layout center">
-              <h1>Genome Name Database</h1>
-              <template is='dom-bind' id="genomeTemplate">
-                <paper-input id="search_input" value="{{search_val}}"></paper-input>
-              
-              <vaadin-grid style="width:800px" id="genomeGrid">
-                <table>
-                    <colgroup>
-                        <col header-text="Name" name="name" sortable="true">
-                        <col header-text="Version" name="abbrev" sortable="true">
-                    </colgroup>
-		    <tbody>
-			<template is='dom-repeat' items="[[genomes]]" as='genome'>
-				<tr>
-					<td>{{genome.name}}</td>
-					<td>{{genome.abbrev}}</td>
-					<td><paper-button style="background-color:#F50057;color:#fff" onclick="template.genome = {{item.abbrev}}; template.subselected = 3;">Add</paper-button></td>
-				</tr>
-			</template>
-		    </tbody>
-                </table>
-              </vaadin-grid>
+
+
+
+        </div>
+        <div class="vertical layout center">
+          <div class="horizontal layout around-justified">
+            <paper-button onclick="template.selected = 1">Genome Upload</paper-button>
+            <paper-button onclick="template.selected = 2">Genome Search</paper-button>
+            <paper-button onclick="template.selected = 3">Annotation Upload</paper-button>
+          </div>
+          <h1>Genome Upload</h1>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the genus and species name of the source organism?</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. <i>Drosophila, birchii</i></h4>
+          <div class="horizontal layout">
+            <paper-input id="genus_input" required auto-validate error-message="required" floatingLabel label="Genus" style="margin-right:3px">{{genusVal}}</paper-input>
+            <paper-input id="species_input" required auto-validate error-message="required" floatingLabel label="Species">{{speciesVal}}</paper-input>
+            <paper-icon-button style="margin-top:18px;margin-bottom:18px" onclick="document.checkSpecies()" icon="search"></paper-icon-button>
+          </div>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">What description would you like to use for this genome assembly?</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. 2014 assembly version 1, with ABySS</h4>
+          <paper-input required auto-validate error-message="required" label="description"></paper-input>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the source of this genome assembly?</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. Genomic Basis for Adaption to Climate Change Project</h4>
+          <paper-input required auto-validate error-message="required" label="Source"></paper-input>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">Which scaffold region should Genome Browser display by default?</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. scaffold<b>1</b>:<b>0</b>-<b>1000,000</b></h4>
+          <paper-input label="scaffold number" type="number"></paper-input>
+          <div class="horizontal layout">
+            <paper-input label="Start" type="number" style="margin-right:3px;width:100px"></paper-input>
+            <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
+          </div>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the taxonomy ID?
+            <small style="color:#a60000">*optional</small>
+          </h3>
+          <paper-input label="taxonomy ID">{{taxon_ID}}</paper-input>
+          <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();">Select (*.fa/*.fasta)</paper-button>
+          <paper-button disabled>Upload</paper-button>
+        </div>
+
+        <div class="vertical layout center">
+          <div class="horizontal layout around-justified">
+            <paper-button onclick="template.selected = 1">Genome Upload</paper-button>
+            <paper-button onclick="template.selected = 2">Genome Search</paper-button>
+            <paper-button onclick="template.selected = 3">Annotation Upload</paper-button>
+          </div>
+          <h1>Genome Search</h1>
+          <template is='dom-bind' id="genomeTemplate">
+            <paper-input id="search_input" style="min-width:250px" value="{{search_val}}" alwaysFloatLabel label="Genome ID/species"></paper-input>
+
+            <vaadin-grid style="width:800px" id="genomeGrid">
+              <table>
+                <colgroup>
+                  <col header-text="Name" name="name" sortable="true">
+                    <col header-text="Version" name="abbrev" sortable="true">
+                </colgroup>
+                <tbody>
+                  <template is='dom-repeat' items="[[genomes]]" as='genome'>
+                    <tr>
+                      <td>{{genome.name}}</td>
+                      <td>{{genome.abbrev}}</td>
+                      <td>
+                        <paper-button style="background-color:#F50057;color:#fff" onclick="template.genome = {{item.abbrev}}; template.subselected = 3;">Add</paper-button>
+                      </td>
+                    </tr>
                   </template>
+                </tbody>
+              </table>
+            </vaadin-grid>
+          </template>
+        </div>
+        <div class="vertical layout center">
+          <div class="horizontal layout around-justified">
+            <paper-button onclick="template.selected = 1">Genome Upload</paper-button>
+            <paper-button onclick="template.selected = 2">Genome Search</paper-button>
+            <paper-button onclick="template.selected = 3">Annotation Upload</paper-button>
           </div>
-          <div class="vertical layout left">
-              <h1>Annotation Upload</h1>
-            <h3>What is the name of the annotation track (e.g. droBir1_annotations)</h3>
-            <paper-input style="width:200px" label="annotation name"></paper-input>      
-            <h3>Which version of the bed format is the file? (default 6)</h3>
-              <paper-input style="width:200px" label="BED version" type="number"></paper-input>  
-            <h3>What would you like to use as the long-form label? (e.g. mixed life stage transcriptome data for Drosophila birchii)</h3>
-              <paper-input style="width:200px" label="long label"></paper-input>      
-            <h3>What would you like to use as the short-form label? (e.g. Drosophila birchii RNASeq data)</h3>
-              <paper-input style="width:200px" label="short label"></paper-input>
-            <div class="horizontal layout">
-                <paper-button>Select (*.bed)</paper-button>
-                <paper-button>Upload</paper-button>
-            </div>
+          <h1>Annotation Upload</h1>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the name of the annotation track</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. droBir1_annotations</h4>
+          <paper-input required auto-validate error-message="required" style="min-width:200px;max-width:400px" label="annotation name"></paper-input>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">Which version of the bed format is the file?</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">default 6</h4>
+          <paper-input required auto-validate error-message="required" style="min-width:200px;max-width:400px" label="BED version" type="number"></paper-input>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">What would you like to use as the long-form label?</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. mixed life stage transcriptome data for Drosophila birchii</h4>
+          <paper-textarea required auto-validate error-message="required" style="width:300px;" maxlength="200" label="long label" rows="1" max-rows="4"></paper-textarea>
+          <h3 style="max-width:700px;-webkit-margin-after:0.255em">What would you like to use as the short-form label?</h3>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. Drosophila birchii RNASeq data</h4>
+          <paper-textarea required auto-validate error-message="required" style="min-width:200px;max-width:400px;" maxlength="50" label="short label" rows="1" max-rows="4"></paper-textarea>
+          <div class="horizontal layout">
+            <paper-button style="background-color:#F50057;color:#fff;margin:2px;margin-top:20px">Select (*.bed)</paper-button>
+            <paper-button disabled style="background-color:#3F51B5;color:#fff;margin:2px;margin-top:20px">Upload</paper-button>
           </div>
-	  <div>
-            <iron-pages selected="{{subselected}}">
-              
-            </iron-pages>
-          </div>
+        </div>
+        <div>
+          <iron-pages selected="{{subselected}}">
+
+          </iron-pages>
+        </div>
       </iron-pages>
 
 

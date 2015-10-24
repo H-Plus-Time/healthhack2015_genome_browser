@@ -43,19 +43,22 @@ class GenomeBrowser(ApplicationSession):
 
         def upload_bed(file_payload):
             pass
-        
+
         def ping(id):
             return 'pinging' + str(id)
-        
+
         def fetch_taxon_id(taxonomy_name):
             handle = Entrez.esearch(db="taxonomy", term=taxonomy_name)
             record = Entrez.read(handle)
-            return record['IdList'][0]
-        
+            if len(record['IdList']) != 0:
+                return record['IdList'][0]
+            else:
+                return -1
+
         def fetch_genomes():
             genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(self.Genome).all())
             return genomes
-            
+
         self.register(fetch_genomes, 'com.gb.fetch_genomes')
         self.register(fetch_taxon_id, 'com.gb.taxon_search')
         self.register(ping, 'com.gb.ping')
