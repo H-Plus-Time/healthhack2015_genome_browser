@@ -36,18 +36,20 @@
   </div>
   <template is="dom-bind" id="t">
     <div>
-      <paper-tabs selected="{{selected}}" style="background-color:#01579b">
-        <paper-tab>File Submission</paper-tab>
-        <paper-tab>Extras</paper-tab>
-      </paper-tabs>
       <paper-progress value="{{progress}}"></paper-progress>
       <iron-pages selected="{{selected}}">
-          <div class="align-items: center">
-		<div class="horizontal layout around-justified">
-		<paper-button id="landingAnnotation" style="background-color:#F50057;color:#fff"> Add Annotation </paper-button>
-		<paper-button id="landingGenome" style="background-color:#F50057;;color:#fff"> Upload Genome </paper-button>
+          <div class="vertical layout fit center-justified">
+              <h1 class="self-center">Upload a Genome or add an annotation to an existing genome</h1>
+		<div class="horizontal layout center-justified">
+        
+		<paper-button id="landingAnnotation" style="background-color:#F50057;color:#fff">Add Annotation</paper-button>
+		<paper-button id="landingGenome" style="background-color:#F50057;;color:#fff">Upload Genome</paper-button>
 		</div>
-        <div class="vertical layout left">
+        
+
+		
+	  </div>
+      <div class="vertical layout left">
                 <h3>What is the genus and species name of the source organism? (e.g. <i>Drosophila, birchii</i>)</h3>
             <div class="horizontal layout">
                 <paper-input floatingLabel label="Genus" style="margin-right:3px"></paper-input>  
@@ -106,9 +108,6 @@
             <paper-input style="width:200px"></paper-input>
             <paper-button></paper-button>
           </div>
-
-		
-	  </div>
 	  <div>
             <iron-pages selected="{{subselected}}">
               

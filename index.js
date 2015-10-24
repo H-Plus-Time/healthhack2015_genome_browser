@@ -114,7 +114,12 @@ document.addEventListener('WebComponentsReady', function() {
     template.subselected = 2;
   });
     console.log("Opened connection");
- 
+    history.pushState(null, null, '');
+      window.addEventListener('popstate', function(event) {
+          history.pushState(null, null, '');
+          alert('Back navigation is disabled on this page. Use the tabs.');
+      });
+    
     document.getGenomeDetails = function(genome) {
         genomeTemplate.annotations = genome.annotations;
         return templateWrapper.querySelector(".genomedetails").outerHTML;
