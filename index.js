@@ -52,7 +52,7 @@ connection.onopen = function(session) {
           console.log(err);
       }
   );
-    
+
   session.subscribe('com.example.upload.on_progress', function(args) {
     var pinfo = args[0];
     console.log('upload event received', pinfo.status, pinfo.chunk, pinfo.remaining, pinfo.total, pinfo.progress);

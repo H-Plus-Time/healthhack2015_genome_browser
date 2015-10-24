@@ -42,10 +42,10 @@
       </paper-tabs>
       <paper-progress value="{{progress}}"></paper-progress>
       <iron-pages selected="{{selected}}">
-          <div class="vertical layout center-justified">
+          <div class="align-items: center">
 		<div class="horizontal layout around-justified">
-		<paper-button id="landingAnnotation" style="background-color:#000;color:#fff"> Add Annotation </paper-button>
-		<paper-button> Upload Genome </paper-button>
+		<paper-button id="landingAnnotation" style="background-color:#F50057;color:#fff"> Add Annotation </paper-button>
+		<paper-button id="landingGenome" style="background-color:#F50057;;color:#fff"> Upload Genome </paper-button>
 		</div>
 
 		
@@ -80,9 +80,18 @@
               <vaadin-grid style="width:800px" id="genomeGrid">
                 <table>
                     <colgroup>
-                        <col header-name="name" sortable="true">
-                        <col header-name="abbrev" sortable="true">
-                    </colgroup>  
+                        <col header-text="Name" sortable="true">
+                        <col header-text="Version" sortable="true">
+                    </colgroup>
+		    <tbody>
+			<template is='dom-repeat' items="[[genomes]]">
+				<tr>
+					<td>{{item.name}}</td>
+					<td>{{item.abbrev}}</td>
+					<td><paper-button onclick="template.genome = {{item.abbrev}}; template.subselected = 3;">Add</paper-button></td>
+				</tr>
+			</template>
+		    </tbody>
                 </table>
               </vaadin-grid>
           </div>
