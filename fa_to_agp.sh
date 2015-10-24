@@ -178,4 +178,4 @@ rm "$TWO_BIT_FILE"
 echo "returning to the main script to build SQL statements"
 
 # Exeunt
-exit 1
+exit 0
