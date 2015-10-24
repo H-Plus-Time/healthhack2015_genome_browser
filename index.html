@@ -42,7 +42,15 @@
       </paper-tabs>
       <paper-progress value="{{progress}}"></paper-progress>
       <iron-pages selected="{{selected}}">
-          <div>
+          <div class="vertical layout center-justified">
+		<div class="horizontal layout around-justified">
+		<paper-button id="landingAnnotation" style="background-color:#000;color:#fff"> Add Annotation </paper-button>
+		<paper-button> Upload Genome </paper-button>
+		</div>
+
+		
+	  </div>
+	  <div>
             <iron-pages selected="{{subselected}}">
               <div class="vertical layout left">
                 <h3>What is the genus and species name of the source organism? (e.g. <i>Drosophila, birchii</i>)</h3>
@@ -81,17 +89,17 @@
           <div class="vertical layout left">
               <h1>Annotation Upload</h1>
             <h3>What is the name of the annotation track (e.g. droBir1_annotations)</h3>
-            <paper-input label="annotation name"></paper-input>      
+            <paper-input style="width:200px" label="annotation name"></paper-input>      
             <h3>Which version of the bed format is the file? (default 6)</h3>
-              <paper-input label="BED version" type="number"></paper-input>  
+              <paper-input style="width:200px" label="BED version" type="number"></paper-input>  
             <h3>What would you like to use as the long-form label? (e.g. mixed life stage transcriptome data for Drosophila birchii)</h3>
-              <paper-input label="long label"></paper-input>      
+              <paper-input style="width:200px" label="long label"></paper-input>      
             <h3>What would you like to use as the short-form label? (e.g. Drosophila birchii RNASeq data)</h3>
-              <paper-input label="short label"></paper-input>
+              <paper-input style="width:200px" label="short label"></paper-input>
             <paper-button>Save (*.bed)</paper-button>
           </div>
           <div class="vertical layout center">
-            <paper-input></paper-input>
+            <paper-input style="width:200px"></paper-input>
             <paper-button></paper-button>
           </div>
             </iron-pages>

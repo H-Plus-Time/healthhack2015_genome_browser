@@ -10,6 +10,16 @@ connection.onopen = function(session) {
 //  uploadBED = document.getElementById('uploadBED');  
 //  uploadRa = document.getElementById('uploadRa');
     uploadButton = document.getElementById('uploadButton');
+    landingAnnotation = document.getElementById('landingAnnotation');
+    landingAnnotation.addEventListener('click', function(e) {
+    	template.selected = 1;
+	template.subselected = 0;
+    });
+    landingGenome = document.getElementById('landingGenome');
+    landingGenome.addEventListener('click', function(e) {
+	template.selected = 1;
+	template.subselected = 1;
+    });
    template = document.getElementById('t');
   console.log("Connected", session.details);
   templateWrapper = document.getElementById('templatewrapper');
@@ -100,8 +110,8 @@ document.addEventListener('WebComponentsReady', function() {
   connection.open();
   template.selected = 0;
   template.subselected = 0;
-  document.getElementById('bedNavButton').addEventListener('click', function(e) {
-    template.subselected = 1;
+  document.getElementById('uploadFasta').addEventListener('click', function(e) {
+    template.subselected = 2;
   });
     console.log("Opened connection");
  
