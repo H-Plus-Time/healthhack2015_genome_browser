@@ -122,6 +122,7 @@ connection.onopen = function(session) {
       console.log(r.files);
       // enable repeated upload since other user can delete the file on the server
       // and this user might want to reupload the file
+      template.progress = 0;
       file.cancel();
     });
     document.r.on('fileError', function(file, message) {
