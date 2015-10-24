@@ -106,7 +106,7 @@ echo "Adding $1 to the end of the chromInfo.tab file..."
 
 TW_PATH=/gbdb/$BASE_NAME/$TWO_BIT_FILE
 
-echo $TW_PATH | awk -v VAR=${TW_PATH} '{printf "%s\t%d\t%s\n",$1,$2, VAR}' chrom.sizes > bed/chromInfo/chromInfo.tab || error "failed to FIXME?"
+awk -v VAR=${TW_PATH} '{printf "%s\t%d\t%s\n",$1,$2, VAR}' chrom.sizes > bed/chromInfo/chromInfo.tab || error "failed to generate chromInfo.tab"
 
 # Step 6
 
