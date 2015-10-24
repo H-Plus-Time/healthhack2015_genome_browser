@@ -95,7 +95,7 @@ connection.onopen = function(session) {
 
   session.subscribe('com.example.upload.on_progress', function(args) {
     var pinfo = args[0];
-    template.progress = pinfo.progress.toString();
+    template.progress = pinfo.progress * 100;
     console.log('upload event received', pinfo.status, pinfo.chunk, pinfo.remaining, pinfo.total, pinfo.progress);
   });
 
