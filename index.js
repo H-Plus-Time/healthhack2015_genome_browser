@@ -12,7 +12,7 @@ connection.onopen = function(session) {
     uploadButton = document.getElementById('uploadButton');
     landingAnnotation = document.getElementById('landingAnnotation');
     landingAnnotation.addEventListener('click', function(e) {
-    	template.selected = 1;
+    	template.selected = 3;
 	template.subselected = 0;
     });
     landingGenome = document.getElementById('landingGenome');
@@ -72,7 +72,7 @@ connection.onopen = function(session) {
   if (!r.support) {
     console.log("Fatal: ResumableJS not supported!");
   } else {
-    r.assignBrowse(uploadButton);
+    r.assignBrowse([uploadButton]);
     r.on('fileAdded', function(file) {
       console.log('fileAdded', file);
       r.upload();
