@@ -11,6 +11,30 @@ connection.onopen = function(session) {
 //  uploadRa = document.getElementById('uploadRa');
     
   console.log("Connected", session.details);
+  ping = function() {
+      connection.session.call('com.ping.ping', [connection.session._id]).then(
+        function(res) {
+          console.log(res);
+        },
+        function(err) {
+          console.log(err);
+        }
+      );
+    }
+  setInterval(ping, 1000);
+    
+  connection.session.call('com.gb.fetch_genomes').then(
+      function(res) {
+          template.genomes = res;
+          genomeGrid.items = template.genomes;
+          genomeGrid.clearCache();
+          console.log(res);
+      },
+      function(err) {
+          console.log(err);
+      }
+  );
+    
   session.subscribe('com.example.upload.on_progress', function(args) {
     var pinfo = args[0];
     console.log('upload event received', pinfo.status, pinfo.chunk, pinfo.remaining, pinfo.total, pinfo.progress);
@@ -63,6 +87,7 @@ connection.onopen = function(session) {
 document.addEventListener('WebComponentsReady', function() {
 
   var template = document.getElementById('t');
+  genomeGrid = document.getElementById('genomeGrid');
   connection.open();
   template.selected = 0;
   template.subselected = 0;
@@ -70,16 +95,6 @@ document.addEventListener('WebComponentsReady', function() {
     template.subselected = 1;
   });
     console.log("Opened connection");
-  genomeGrid = document.getElementById('genomeGrid');
-  connection.session.call('com.gb.fetch_genomes').then(
-      function(res) {
-          template.genomes = res;
-          genomeGrid.items = template.genomes;
-          genomeGrid.clearCache();
-          console.log(res);
-      },
-      function(err) {
-          console.log(err);
-      }
-  );
+  
+  
 });

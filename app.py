@@ -25,6 +25,7 @@ class GenomeBrowser(ApplicationSession):
         Session = sessionmaker(bind=engine)
         db = Session()
         self.Genome = Base.classes.defaultDb
+        Entrez.email = 'nicholas.roberts.au@gmail.com'
         pass
 
 
@@ -43,6 +44,9 @@ class GenomeBrowser(ApplicationSession):
         def upload_bed(file_payload):
             pass
         
+        def ping(id):
+            return 'pinging' + str(id)
+        
         def fetch_taxon_id(taxonomy_name):
             handle = Entrez.esearch(db="taxonomy", term=taxonomy_name)
             record = Entrez.read(handle)
@@ -54,5 +58,6 @@ class GenomeBrowser(ApplicationSession):
             
         self.register(fetch_genomes, 'com.gb.fetch_genomes')
         self.register(fetch_taxon_id, 'com.gb.taxon_search')
+        self.register(ping, 'com.gb.ping')
 	while True:
 		yield sleep(1)
