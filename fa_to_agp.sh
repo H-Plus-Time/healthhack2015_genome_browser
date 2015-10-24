@@ -112,7 +112,7 @@ awk -v VAR=${TW_PATH} '{printf "%s\t%d\t%s\n",$1,$2, VAR}' chrom.sizes > bed/chr
 
 echo "Creating the $BASE_NAME database..."
 
-hgsql -e "create database $BASE_NAME ;" mysql || error "Failed to create database"
+hgsql -e "create database if not exists $BASE_NAME;" mysql || error "Failed to create database"
 
 # Step 6.1 Not in original HOWTO
 
