@@ -70,7 +70,7 @@ fi
 
 echo "Creating a symlink from local files to db folder structure..."
 
-cp `pwd`/$TWO_BIT_FILE /gbdb/$BASE_NAME/$TWO_BIT_FILE
+cp "$PWD"/$TWO_BIT_FILE /gbdb/$BASE_NAME/$TWO_BIT_FILE
 
 # Step 4
 
@@ -147,7 +147,7 @@ if [[ ! -d /gbdb/$BASE_NAME/wib ]]; then
     mkdir -p /gbdb/$BASE_NAME/wib
 fi
  
-cp `pwd`/bed/gc5Base/gc5Base.wib /gbdb/$BASE_NAME/wib
+cp "$PWD"/bed/gc5Base/gc5Base.wib /gbdb/$BASE_NAME/wib
 
 
 echo "Zipping original file, putting into /gbdb/ for backup"
