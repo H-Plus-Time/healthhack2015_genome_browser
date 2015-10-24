@@ -21,6 +21,7 @@
     "iron-elements": "PolymerElements/iron-elements#~1.0.4",
     "paper-elements": "PolymerElements/paper-elements#~1.0.5",
     "resumable.js": "resumablejs#~1.0.2",
-    "vaadin-elements": "0.3.0-beta11"
+    "vaadin-elements": "0.3.0-beta11",
+    "underscore": "~1.8.3"
   }
 }

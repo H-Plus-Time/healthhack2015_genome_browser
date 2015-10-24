@@ -12,10 +12,26 @@
   <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
   <script src="bower_components/autobahnjs/autobahn.min.js"></script>
   <script src="bower_components/resumable.js/resumable.js"></script>
+  <link rel='import' href='bower_components/vaadin-grid/vaadin-grid.html'>
   <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+  <script src="bower_components/underscore/underscore.js"></script>`
 </head>
 
 <body unrespolved fullbleed layout vertical>
+  <div id="templatewrapper" style="display: none;">
+	<template is='dom-bind'>
+		<style>.seqdata {-webkit-flex: 1; flex: 1; max-height: 20px;}
+      .seqcolumn { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; }</style>
+      <div class="sequencedetails" style="display: -webkit-flex; display: flex; height: 170px;">
+       <template repeat="{{anno in annotations}}">
+		<div class="horizontal layout">
+			<div>{{anno.name}}</div>
+		</div>
+	</template>
+	</div>
+      </div>
+	</template>
+  </div>
   <template is="dom-bind" id="t">
     <div>
       <paper-tabs selected="{{selected}}" style="background-color:#01579b">
@@ -48,11 +64,11 @@
           
           <div class="vertical layout center">
               <h1>Genome Name Database</h1>
-              <vaadin-grid>
+              <vaadin-grid style="width:800px" id="genomeGrid">
                 <table>
                     <colgroup>
-                        <col name="name" sortable="true">
-                        <col name="abbrev" sortable="true">
+                        <col header-name="name" sortable="true">
+                        <col header-name="abbrev" sortable="true">
                     </colgroup>  
                 </table>
               </vaadin-grid>

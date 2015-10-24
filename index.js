@@ -9,10 +9,12 @@ connection.onopen = function(session) {
 //  uploadFasta = document.getElementById('uploadFasta');
 //  uploadBED = document.getElementById('uploadBED');  
 //  uploadRa = document.getElementById('uploadRa');
-    
+   template = document.getElementById('t');
   console.log("Connected", session.details);
+  templateWrapper = document.getElementById('templatewrapper');
+  genomeTemplate = templateWrapper.querySelector('template');
   ping = function() {
-      connection.session.call('com.ping.ping', [connection.session._id]).then(
+      connection.session.call('com.gb.ping', [connection.session._id]).then(
         function(res) {
           console.log(res);
         },
@@ -23,11 +25,16 @@ connection.onopen = function(session) {
     }
   setInterval(ping, 1000);
     
-  connection.session.call('com.gb.fetch_genomes').then(
+  session.call('com.gb.fetch_genomes').then(
       function(res) {
+          console.log(res);
+	  gens = _.map(res, function(item) {
+	  	return {'name': item[0], 'abbrev': item[1]}
+	  });
           template.genomes = res;
+	  console.log(genomeGrid);
           genomeGrid.items = template.genomes;
-          genomeGrid.clearCache();
+          genomeGrid.clearCache(template.genomes.length);
           console.log(res);
       },
       function(err) {
@@ -87,6 +94,7 @@ connection.onopen = function(session) {
 document.addEventListener('WebComponentsReady', function() {
 
   var template = document.getElementById('t');
+  template.genomes = [];
   genomeGrid = document.getElementById('genomeGrid');
   connection.open();
   template.selected = 0;
@@ -95,6 +103,36 @@ document.addEventListener('WebComponentsReady', function() {
     template.subselected = 1;
   });
     console.log("Opened connection");
-  
+ 
+    document.getGenomeeDetails = function(genome) {
+        genomeTemplate.annotations = genome.annotations;
+        return templateWrapper.querySelector(".genomedetails").outerHTML;
+      }
+
+    genomeGrid.rowDetailsGenerator = function(rowIndex) {
+        var elem = document.createElement('div');
+        elem.setAttribute('class', 'featurenamedetailswrapper');
+        genomeGrid.getItem(rowIndex, function(error, item) {
+          console.log(item);
+          if (!error) {
+            console.log(item);
+            elem.innerHTML = document.getGenomeDetails(item);
+          }
+        });
+
+        return elem;
+      }
+
+      var gridDetailsOpenIndex = -1;
+
+      // Show details for the selected row
+      genomeGrid.addEventListener('select', function() {
+        genomeGrid.setRowDetailsVisible(gridDetailsOpenIndex, false);
+        var selected = genomeGrid.selection.selected();
+        if (selected.length == 1) {
+          genomeGrid.setRowDetailsVisible(selected[0], true);
+          detailsOpenIndex = selected[0];
+        }
+      }); 
   
 });
