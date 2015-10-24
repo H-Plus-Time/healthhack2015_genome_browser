@@ -19,7 +19,7 @@ class GenomeBrowser(ApplicationSession):
         self.init()
 
     def init(self):
-        engine = create_engine("mysql+pymysql:///root:mysqlroot@localhost/hgcentral")
+        engine = create_engine("mysql+pymysql://root:mysqlroot@localhost/hgcentral")
         Base = automap_base()
         Base.prepare(engine, reflect=True)
         Session = sessionmaker(bind=engine)
@@ -52,5 +52,7 @@ class GenomeBrowser(ApplicationSession):
             genomes = map(lambda x: [x.name, x.genome], db.query(self.Genome).all())
             return genomes
             
-        session.register('com.gb.fetch_genomes', fetch_genomes)
-        session.register('com.gb.taxon_search', fetch_taxon_id)
+        self.register(fetch_genomes, 'com.gb.fetch_genomes')
+        self.register(fetch_taxon_id, 'com.gb.taxon_search')
+	while True:
+		yield sleep(1)
