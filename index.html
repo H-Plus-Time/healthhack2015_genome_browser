@@ -18,6 +18,8 @@
 </head>
 
 <body unrespolved fullbleed layout vertical>
+  <button id="uploadButton" style="display: none;"></button>
+  <paper-toast id="toasty">{{toast_message}}</paper-toast>
   <div id="templatewrapper" style="display: none;">
 	<template is='dom-bind'>
 		<style>.seqdata {-webkit-flex: 1; flex: 1; max-height: 20px;}
@@ -42,24 +44,27 @@
       <iron-pages selected="{{selected}}">
           <div>
             <iron-pages selected="{{subselected}}">
-              <div class="vertical layout center">
+              <div class="vertical layout left">
+                <h3>What is the genus and species name of the source organism? (e.g. <i>Drosophila, birchii</i>)</h3>
             <div class="horizontal layout">
                 <paper-input floatingLabel label="Genus" style="margin-right:3px"></paper-input>  
                 <paper-input floatingLabel label="Species"></paper-input>  
             </div>
-            
+            <h3>What description would you like to use for this genome assembly? (e.g. 2014 assembly version 1, with ABySS)</h3>
             <paper-input label="description"></paper-input>
+            <h3>What is the source of this genome assembly? (e.g. Genomic Basis for Adapption to Climate Change Project)</h3>
             <paper-input label="Source"></paper-input>
             <div>Default Display location</div>
+            <h3>Which scaffold should the browser default to?</h3>
             <paper-input label="scaffold number"></paper-input>
+            <h3>What range of the scaffold should thge browser default to? (e.g. 0-1000000)</h3>
             <div class="horizontal layout">
               <paper-input label="Start" type="number" style="margin-right:3px;width:100px"></paper-input>
               <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
             </div>
-            
+            <h3>What is the taxonomy ID? (*optional)</h3>
             <paper-input label="taxonomy ID"></paper-input>
-            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px">Upload FASTA</paper-button>
-            <paper-button id="bedNavButton">Upload BED Annotation File</paper-button>
+            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px">Save (*.fa/*.fasta)</paper-button>
           </div>
           
           <div class="vertical layout center">
@@ -72,6 +77,18 @@
                     </colgroup>  
                 </table>
               </vaadin-grid>
+          </div>
+          <div class="vertical layout left">
+              <h1>Annotation Upload</h1>
+            <h3>What is the name of the annotation track (e.g. droBir1_annotations)</h3>
+            <paper-input label="annotation name"></paper-input>      
+            <h3>Which version of the bed format is the file? (default 6)</h3>
+              <paper-input label="BED version" type="number"></paper-input>  
+            <h3>What would you like to use as the long-form label? (e.g. mixed life stage transcriptome data for Drosophila birchii)</h3>
+              <paper-input label="long label"></paper-input>      
+            <h3>What would you like to use as the short-form label? (e.g. Drosophila birchii RNASeq data)</h3>
+              <paper-input label="short label"></paper-input>
+            <paper-button>Save (*.bed)</paper-button>
           </div>
           <div class="vertical layout center">
             <paper-input></paper-input>

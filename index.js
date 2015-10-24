@@ -9,6 +9,7 @@ connection.onopen = function(session) {
 //  uploadFasta = document.getElementById('uploadFasta');
 //  uploadBED = document.getElementById('uploadBED');  
 //  uploadRa = document.getElementById('uploadRa');
+    uploadButton = document.getElementById('uploadButton');
    template = document.getElementById('t');
   console.log("Connected", session.details);
   templateWrapper = document.getElementById('templatewrapper');
@@ -61,7 +62,7 @@ connection.onopen = function(session) {
   if (!r.support) {
     console.log("Fatal: ResumableJS not supported!");
   } else {
-    r.assignBrowse([uploadFasta, uploadBED, uploadRa]);
+    r.assignBrowse([uploadButton]);
     r.on('fileAdded', function(file) {
       console.log('fileAdded', file);
       r.upload();
@@ -104,7 +105,7 @@ document.addEventListener('WebComponentsReady', function() {
   });
     console.log("Opened connection");
  
-    document.getGenomeeDetails = function(genome) {
+    document.getGenomeDetails = function(genome) {
         genomeTemplate.annotations = genome.annotations;
         return templateWrapper.querySelector(".genomedetails").outerHTML;
       }
