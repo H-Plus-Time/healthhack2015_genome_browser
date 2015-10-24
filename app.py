@@ -1,4 +1,16 @@
 from Bio import Entrez
+from sqlalchemy import create_engine, desc
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, MetaData
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from twisted.internet.task import LoopingCall
+from twisted.internet.defer import inlineCallbacks, returnValue
+from autobahn.twisted.util import sleep
+from autobahn.twisted.wamp import ApplicationSession
+from subprocess import Popen
+from sqlalchemy.ext.automap import automap_base
+
+
 
 class GenomeBrowser(ApplicationSession):
 
@@ -7,7 +19,14 @@ class GenomeBrowser(ApplicationSession):
         self.init()
 
     def init(self):
+        engine = create_engine("mysql+pymysql:///root:mysqlroot@localhost/hgcentral")
+        Base = automap_base()
+        Base.prepare(engine, reflect=True)
+        Session = sessionmaker(bind=engine)
+        db = Session()
+        self.Genome = Base.classes.defaultDb
         pass
+
 
     @inlineCallbacks
     def onJoin(self, details):
@@ -28,3 +47,10 @@ class GenomeBrowser(ApplicationSession):
             handle = Entrez.esearch(db="taxonomy", term=taxonomy_name)
             record = Entrez.read(handle)
             return record['IdList'][0]
+        
+        def fetch_genomes():
+            genomes = map(lambda x: [x.name, x.genome], db.query(self.Genome).all())
+            return genomes
+            
+        session.register('com.gb.fetch_genomes', fetch_genomes)
+        session.register('com.gb.taxon_search', fetch_taxon_id)

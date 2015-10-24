@@ -63,5 +63,33 @@
             }
          }
       }]
-   }]
+   },
+          {
+         "type": "container",
+         "options": {
+            "pythonpath": [".."],
+            "env": {
+              "vars" : {
+                  "PYTHONBUFFERED" : "1"
+               }
+            }
+         },
+         "components": [
+            {
+               "type": "class",
+               "classname": "app.GenomeBrowser",
+               "realm": "realm1",
+               "transport": {
+                  "type": "websocket",
+                  "endpoint": {
+                     "type": "tcp",
+                     "host": "127.0.0.1",
+                     "port": 8080
+                  },
+                  "url": "ws://127.0.0.1:8080/ws"
+               }
+            }
+         ]
+      }
+    ]
 }

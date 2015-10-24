@@ -7,28 +7,61 @@
   <link rel="import" href="bower_components/paper-button/paper-button.html">
   <link rel="import" href="bower_components/iron-pages/iron-pages.html">
   <link rel="import" href="bower_components/paper-input/paper-input.html">
+  <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+  <link rel="import" href="bower_components/paper-card/paper-card.html">
   <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
   <script src="bower_components/autobahnjs/autobahn.min.js"></script>
-  <script src="bower_components/resumablejs/resumable.js"></script>
+  <script src="bower_components/resumable.js/resumable.js"></script>
   <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
 </head>
 
 <body unrespolved fullbleed layout vertical>
   <template is="dom-bind" id="t">
     <div>
-      <paper-tabs selected="{{selected}}">
-        <paper-tab></paper-tab>
-        <paper-tab></paper-tab>
+      <paper-tabs selected="{{selected}}" style="background-color:#01579b">
+        <paper-tab>File Submission</paper-tab>
+        <paper-tab>Extras</paper-tab>
       </paper-tabs>
       <paper-progress value="{{progress}}"></paper-progress>
-      <iron-pages>
+      <iron-pages selected="{{selected}}">
+          <div>
+            <iron-pages selected="{{subselected}}">
+              <div class="vertical layout center">
+            <div class="horizontal layout">
+                <paper-input floatingLabel label="Genus" style="margin-right:3px"></paper-input>  
+                <paper-input floatingLabel label="Species"></paper-input>  
+            </div>
+            
+            <paper-input label="description"></paper-input>
+            <paper-input label="Source"></paper-input>
+            <div>Default Display location</div>
+            <paper-input label="scaffold number"></paper-input>
+            <div class="horizontal layout">
+              <paper-input label="Start" type="number" style="margin-right:3px;width:100px"></paper-input>
+              <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
+            </div>
+            
+            <paper-input label="taxonomy ID"></paper-input>
+            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px">Upload FASTA</paper-button>
+            <paper-button id="bedNavButton">Upload BED Annotation File</paper-button>
+          </div>
+          
           <div class="vertical layout center">
-            <paper-input label="Source Species"></paper-input>
-            <paper-input label="metadata 2"></paper-input>
-            <paper-input label="metadata 3"></paper-input>
-            <paper-button style="background-color:#F50057;margin:3px">Upload FASTA</paper-button>
-            <paper-button style="background-color:#F50057;margin:3px">Upload BED</paper-button>
-            <paper-button style="background-color:#F50057;margin:3px">Upload RA</paper-button>
+              <h1>Genome Name Database</h1>
+              <vaadin-grid>
+                <table>
+                    <colgroup>
+                        <col name="name" sortable="true">
+                        <col name="abbrev" sortable="true">
+                    </colgroup>  
+                </table>
+              </vaadin-grid>
+          </div>
+          <div class="vertical layout center">
+            <paper-input></paper-input>
+            <paper-button></paper-button>
+          </div>
+            </iron-pages>
           </div>
       </iron-pages>
 
