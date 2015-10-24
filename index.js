@@ -50,7 +50,7 @@ connection.onopen = function(session) {
     }
 
     landingAnnotation.addEventListener('click', function(e) {
-    	template.selected = 3;
+    	template.selected = 2;
 	template.subselected = 0;
     });
     landingGenome = document.getElementById('landingGenome');
