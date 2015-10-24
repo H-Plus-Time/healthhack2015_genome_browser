@@ -13,6 +13,15 @@
 # Note: this has not been tested against edge cases, and only against the 
 # single supplied .fa file
 
+# Handle failures from components that aren't the last component of a pipeline.
+set -o pipefail
+
+error()
+{
+  echo "$0: $@" >&2
+  exit 1
+}
+
 echo "total $#"
 
 if [ $# != 2 ]; then
@@ -23,7 +32,7 @@ if [ $# != 2 ]; then
     echo "Not enough parameters"	    
     echo "";
     exit 1;
-fi
+fi >&2
 
 if [ ! -f $1 ]; then
     echo "Usage: $0 <fa-file> <output-name>";
@@ -33,7 +42,7 @@ if [ ! -f $1 ]; then
     echo "First parameter isn't a file"	    
     echo "";
     exit 1;
-fi 
+fi  >&2
 
 FA_FILE="$1"   # eg D_birchii.scafSeq.fill.v1.0.fa
 BASE_NAME="$2" # eg droBir1
@@ -46,14 +55,14 @@ GB_SOURCE=/home/ubuntu/src/gb
 
 if [ ! -f $AGP_FILE ]; then
     echo "Creating the AGP file..."
-    hgFakeAgp -minContigGap=1 $FA_FILE $AGP_FILE
+    hgFakeAgp -minContigGap=1 $FA_FILE $AGP_FILE || error "error converting to AGP"
 fi
 
 # Step 3 
 
 if [ ! -f $TWO_BIT_FILE ]; then
     echo "Creating the 2bit file..."
-    faToTwoBit $FA_FILE $TWO_BIT_FILE
+    faToTwoBit $FA_FILE $TWO_BIT_FILE || error "error converting to two bit"
 else TB_EXISTS=1
 fi
 
@@ -77,8 +86,8 @@ cp "$PWD"/$TWO_BIT_FILE /gbdb/$BASE_NAME/$TWO_BIT_FILE
 echo "Checking the agp and fa file are the same..." 
 sleep 2
 
-if [ ! $TB_EXISTS ]; then 
-    checkAgpAndFa $AGP_FILE $FA_FILE
+if [[ ! $TB_EXISTS ]]; then 
+    checkAgpAndFa $AGP_FILE $FA_FILE || error "failed AGP/FA check"
 fi
 
 # Step 5
@@ -86,7 +95,7 @@ fi
 echo ""
 echo "Creating the chromInfo file..."
 
-twoBitInfo $TWO_BIT_FILE stdout | sort -k2nr > chrom.sizes
+twoBitInfo $TWO_BIT_FILE stdout | sort -k2nr > chrom.sizes || error "failed to create chromInfo file"
 
 if [[ ! -d bed ]] || [[ ! -d bed/chromInfo ]]; then
     echo "Creating chromInfo folder..."
@@ -97,31 +106,31 @@ echo "Adding $1 to the end of the chromInfo.tab file..."
 
 TW_PATH=/gbdb/$BASE_NAME/$TWO_BIT_FILE
 
-echo $TW_PATH | awk -v VAR=${TW_PATH} '{printf "%s\t%d\t%s\n",$1,$2, VAR}' chrom.sizes > bed/chromInfo/chromInfo.tab
+echo $TW_PATH | awk -v VAR=${TW_PATH} '{printf "%s\t%d\t%s\n",$1,$2, VAR}' chrom.sizes > bed/chromInfo/chromInfo.tab || error "failed to FIXME?"
 
 # Step 6
 
 echo "Creating the $BASE_NAME database..."
 
-hgsql -e "create database $BASE_NAME ;" mysql
+hgsql -e "create database $BASE_NAME ;" mysql || error "Failed to create database"
 
 # Step 6.1 Not in original HOWTO
 
 echo "Granting the readonly db user access to the new database"
 
-hgsql -e "GRANT SELECT, CREATE TEMPORARY TABLES on ${BASE_NAME}.* TO readonly@localhost IDENTIFIED BY 'access';" mysql 
+hgsql -e "GRANT SELECT, CREATE TEMPORARY TABLES on ${BASE_NAME}.* TO readonly@localhost IDENTIFIED BY 'access';" mysql || error "Failed to grant DB permissions"
 
 # Step 7
 
 echo "Adding the GRP table to the $BASE_NAME database..."
 
-hgsql $BASE_NAME < $GB_SOURCE/kent/src/hg/lib/grp.sql
+hgsql $BASE_NAME < $GB_SOURCE/kent/src/hg/lib/grp.sql || error "Failed to add GRP table"
 
 # Step 8
  
 echo "Loading $BASE_NAME chromInfo into database..."
 
-hgLoadSqlTab $BASE_NAME chromInfo $GB_SOURCE/kent/src/hg/lib/chromInfo.sql bed/chromInfo/chromInfo.tab
+hgLoadSqlTab $BASE_NAME chromInfo $GB_SOURCE/kent/src/hg/lib/chromInfo.sql bed/chromInfo/chromInfo.tab || error "Failed to add GRP table"
 
 # Step 9
 
@@ -138,9 +147,9 @@ fi
 
 echo "Generating gc5Base data..."
 
-wigEncode <(hgGcPercent -wigOut -doGaps -file=stdout -win=5 -verbose=0 $BASE_NAME $TWO_BIT_FILE) bed/gc5Base/gc5Base.{wig,wib}
+wigEncode <(hgGcPercent -wigOut -doGaps -file=stdout -win=5 -verbose=0 $BASE_NAME $TWO_BIT_FILE) bed/gc5Base/gc5Base.{wig,wib} || error "failed to encode wig"
 
-hgLoadWiggle -pathPrefix=/gbdb/$BASE_NAME/wig $BASE_NAME gc5Base bed/gc5Base/gc5Base.wig
+hgLoadWiggle -pathPrefix=/gbdb/$BASE_NAME/wig $BASE_NAME gc5Base bed/gc5Base/gc5Base.wig || error "failed to load wiggle"
 
 if [[ ! -d /gbdb/$BASE_NAME/wib ]]; then
     echo "Creating wib folder..."
