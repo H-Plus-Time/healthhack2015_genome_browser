@@ -1,5 +1,5 @@
 var connection = new autobahn.Connection({
-  url: 'ws://115.146.87.241:8080/ws',
+  url: 'ws://115.146.87.241/ws',
   realm: 'realm1'
 });
 
@@ -10,7 +10,7 @@ connection.onopen = function(session) {
 //  uploadBED = document.getElementById('uploadBED');  
 //  uploadRa = document.getElementById('uploadRa');
     
-  console.log("Connected", details);
+  console.log("Connected", session.details);
 //  session.subscribe('com.example.upload.on_progress', function(args) {
 //    var pinfo = args[0];
 //    console.log('upload event received', pinfo.status, pinfo.chunk, pinfo.remaining, pinfo.total, pinfo.progress);
@@ -63,12 +63,11 @@ connection.onopen = function(session) {
 document.addEventListener('WebComponentsReady', function() {
 
   var template = document.getElementById('t');
-
+  connection.open();
   template.selected = 0;
   template.subselected = 0;
 //  document.getElementById('bedNavButton').addEventListener('click', function(e) {
 //    template.subselected = 1;
 //  });
-  connection.open();
     console.log("Opened connection");
 });
