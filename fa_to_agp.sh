@@ -63,6 +63,7 @@ fi
 if [ ! -f $TWO_BIT_FILE ]; then
     echo "Creating the 2bit file..."
     faToTwoBit $FA_FILE $TWO_BIT_FILE || error "error converting to two bit"
+    TB_EXISTS=0
 else TB_EXISTS=1
 fi
 
