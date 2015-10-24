@@ -14,16 +14,33 @@ connection.onopen = function(session) {
     genomeTemplate = document.getElementById('genomeTemplate');
     speciesInput = document.getElementById('species_input');
     genusInput = document.getElementById('genus_input');
+    taxonInput = document.getElementById('taxon_input');
+    speciesCheckInd = document.getElementById('speciesCheckInd');
+    template = document.getElementById('t');
+
+    document.detectEnter = function (event) {
+    if (event.which == 13 || event.keyCode == 13) {
+        document.checkSpecies();
+        return false;
+    }
+    return true;
+    };
     document.checkSpecies = function() {
+      console.log(template.genusVal + ' ' + template.speciesVal);
       session.call('com.gb.taxon_search', [template.genusVal + ' ' + template.speciesVal]).then(
         function(res) {
           console.log(res);
           if(res != -1) {
             speciesCheckInd.icon = 'done';
+            speciesCheckInd.style.backgroundColor = '#009688';
             template.taxon_ID = res.toString();
-
+            // taxonInput.style.backgroundColor = '#51beb4';
           } else {
             speciesCheckInd.icon = 'warning';
+            speciesCheckInd.style.backgroundColor = '#F44336';
+            setTimeout(function() {speciesCheckInd.icon = 'search';
+                  speciesCheckInd.style.backgroundColor = '#fff';}, 3000);
+
           }
         },
         function(err) {
@@ -81,7 +98,7 @@ connection.onopen = function(session) {
     console.log('upload event received', pinfo.status, pinfo.chunk, pinfo.remaining, pinfo.total, pinfo.progress);
   });
 
-  var r = new Resumable({
+  document.r = new Resumable({
     target: 'upload',
     chunkSize: 1 * 1024 * 1024,
     forceChunkSize: true, // https://github.com/23/resumable.js/issues/51
@@ -92,22 +109,21 @@ connection.onopen = function(session) {
       session: session.id
     }
   });
-  if (!r.support) {
+  if (!document.r.support) {
     console.log("Fatal: ResumableJS not supported!");
   } else {
-    r.assignBrowse([uploadButton]);
-    r.on('fileAdded', function(file) {
+    document.r.assignBrowse([uploadButton]);
+    document.r.on('fileAdded', function(file) {
       console.log('fileAdded', file);
-      r.upload();
     });
-    r.on('fileSuccess', function(file, message) {
+    document.r.on('fileSuccess', function(file, message) {
       console.log('fileSuccess', file, message);
       console.log(r.files);
       // enable repeated upload since other user can delete the file on the server
       // and this user might want to reupload the file
       file.cancel();
     });
-    r.on('fileError', function(file, message) {
+    document.r.on('fileError', function(file, message) {
       console.log('fileError', file, message);
     });
   }

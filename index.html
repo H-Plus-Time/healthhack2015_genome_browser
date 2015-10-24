@@ -75,9 +75,9 @@
           <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the genus and species name of the source organism?</h3>
           <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. <i>Drosophila, birchii</i></h4>
           <div class="horizontal layout">
-            <paper-input id="genus_input" required auto-validate error-message="required" floatingLabel label="Genus" style="margin-right:3px">{{genusVal}}</paper-input>
-            <paper-input id="species_input" required auto-validate error-message="required" floatingLabel label="Species">{{speciesVal}}</paper-input>
-            <paper-icon-button style="margin-top:18px;margin-bottom:18px" onclick="document.checkSpecies()" icon="search"></paper-icon-button>
+            <paper-input id="genus_input" required auto-validate error-message="required" floatingLabel label="Genus" style="margin-right:3px" value="{{genusVal}}"></paper-input>
+            <paper-input id="species_input" required auto-validate error-message="required" floatingLabel label="Species" onkeypress="document.detectEnter(event)" value="{{speciesVal}}"></paper-input>
+            <paper-icon-button id="speciesCheckInd" style="margin-top:18px;margin-bottom:18px" onclick="document.checkSpecies()"  icon="search"></paper-icon-button>
           </div>
           <h3 style="max-width:700px;-webkit-margin-after:0.255em">What description would you like to use for this genome assembly?</h3>
           <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. 2014 assembly version 1, with ABySS</h4>
@@ -93,11 +93,13 @@
             <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
           </div>
           <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the taxonomy ID?
-            <small style="color:#a60000">*optional</small>
+            <!-- <small style="color:#a60000">*optional</small> -->
           </h3>
-          <paper-input label="taxonomy ID">{{taxon_ID}}</paper-input>
-          <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();">Select (*.fa/*.fasta)</paper-button>
-          <paper-button disabled>Upload</paper-button>
+          <paper-input id="taxon_input" label="taxonomy ID" value="{{taxon_ID}}"></paper-input>
+          <div class="horizontal layout">
+          <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();document.getElementById('submitFasta').disabled = false; document.getElementById('submitFasta').style.backgroundColor='#3F51B5'">Select (*.fa/*.fasta)</paper-button>
+          <paper-button id="submitFasta" style="margin:3px" onclick="document.r.upload()" disabled>Upload</paper-button>
+        </div>
         </div>
 
         <div class="vertical layout center">
@@ -142,8 +144,8 @@
           <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. droBir1_annotations</h4>
           <paper-input required auto-validate error-message="required" style="min-width:200px;max-width:400px" label="annotation name"></paper-input>
           <h3 style="max-width:700px;-webkit-margin-after:0.255em">Which version of the bed format is the file?</h3>
-          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">default 6</h4>
-          <paper-input required auto-validate error-message="required" style="min-width:200px;max-width:400px" label="BED version" type="number"></paper-input>
+          <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. 6</h4>
+          <paper-input style="min-width:200px;max-width:400px" label="BED version" type="number"></paper-input>
           <h3 style="max-width:700px;-webkit-margin-after:0.255em">What would you like to use as the long-form label?</h3>
           <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. mixed life stage transcriptome data for Drosophila birchii</h4>
           <paper-textarea required auto-validate error-message="required" style="width:300px;" maxlength="200" label="long label" rows="1" max-rows="4"></paper-textarea>
@@ -151,8 +153,8 @@
           <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. Drosophila birchii RNASeq data</h4>
           <paper-textarea required auto-validate error-message="required" style="min-width:200px;max-width:400px;" maxlength="50" label="short label" rows="1" max-rows="4"></paper-textarea>
           <div class="horizontal layout">
-            <paper-button style="background-color:#F50057;color:#fff;margin:2px;margin-top:20px">Select (*.bed)</paper-button>
-            <paper-button disabled style="background-color:#3F51B5;color:#fff;margin:2px;margin-top:20px">Upload</paper-button>
+            <paper-button style="background-color:#F50057;color:#fff;margin:2px;margin-top:20px" onclick="document.getElementById('uploadButton').click();document.getElementById('submitBED').disabled = false; document.getElementById('submitBED').style.backgroundColor='#3F51B5'">Select (*.bed)</paper-button>
+            <paper-button id="submitBED" disabled style="margin:2px;margin-top:20px" onclick="document.r.upload()">Upload</paper-button>
           </div>
         </div>
         <div>
