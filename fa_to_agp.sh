@@ -13,8 +13,10 @@
 # Note: this has not been tested against edge cases, and only against the 
 # single supplied .fa file
 
-# Handle failures from components that aren't the last component of a pipeline.
-set -o pipefail
+# Exit on errors, unset variables, including errors from all pipeline components
+set -eEu -o pipefail
+shopt -s failglob
+trap 'echo >&2 "${BASH_SOURCE:-$0}:${LINENO}: unknown error"' ERR
 
 error()
 {
