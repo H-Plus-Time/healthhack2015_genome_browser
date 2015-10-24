@@ -49,14 +49,14 @@ connection.onopen = function(session) {
 //
 //  upload_reference_genome = function() {}
 //  
-//  session.call('com.gb.taxon_search', ['drosophila birchii']).then(
-//      function(res) {
-//          console.log(res);
-//      },
-//      function(err) {
-//          console.log(err);
-//      }
-//  );
+  session.call('com.gb.taxon_search', ['drosophila birchii']).then(
+      function(res) {
+          console.log(res);
+      },
+      function(err) {
+          console.log(err);
+      }
+  );
 }
 
 
