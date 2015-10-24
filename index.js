@@ -95,12 +95,13 @@ connection.onopen = function(session) {
 
   session.subscribe('com.example.upload.on_progress', function(args) {
     var pinfo = args[0];
+    template.progress = pinfo.progress.toString();
     console.log('upload event received', pinfo.status, pinfo.chunk, pinfo.remaining, pinfo.total, pinfo.progress);
   });
 
   document.r = new Resumable({
     target: 'upload',
-    chunkSize: 1 * 1024 * 1024,
+    chunkSize: 1 * 512 * 1024,
     forceChunkSize: true, // https://github.com/23/resumable.js/issues/51
     simultaneousUploads: 4,
     testChunks: true,

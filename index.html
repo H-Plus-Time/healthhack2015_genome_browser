@@ -7,6 +7,7 @@
   <link rel="import" href="bower_components/paper-button/paper-button.html">
   <link rel="import" href="bower_components/iron-pages/iron-pages.html">
   <link rel="import" href="bower_components/paper-input/paper-input.html">
+  <link rel="import" href="bower_components/paper-progress/paper-progress.html">
   <link rel="import" href="bower_components/paper-toast/paper-toast.html">
   <link rel="import" href="bower_components/iron-icon/iron-icon.html">
   <link href="bower_components/iron-icons/iron-icons.html" rel="import">
@@ -52,7 +53,6 @@
   </div>
   <template is="dom-bind" id="t">
     <div>
-      <paper-progress value="{{progress}}"></paper-progress>
       <iron-pages selected="{{selected}}">
         <div class="vertical layout fit center-justified">
           <h1 class="self-center">Upload a Genome or add an annotation to an existing genome</h1>
@@ -71,6 +71,7 @@
             <paper-button onclick="template.selected = 2">Genome Search</paper-button>
             <paper-button onclick="template.selected = 3">Annotation Upload</paper-button>
           </div>
+          <paper-progress value="{{progress}}"></paper-progress>
           <h1>Genome Upload</h1>
           <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the genus and species name of the source organism?</h3>
           <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. <i>Drosophila, birchii</i></h4>
@@ -139,6 +140,7 @@
             <paper-button onclick="template.selected = 2">Genome Search</paper-button>
             <paper-button onclick="template.selected = 3">Annotation Upload</paper-button>
           </div>
+          <paper-progress value="{{progress}}"></paper-progress>
           <h1>Annotation Upload</h1>
           <h3 style="max-width:700px;-webkit-margin-after:0.255em">What is the name of the annotation track</h3>
           <h4 style="color:#5e5e5e;-webkit-margin-before:0.255em;-webkit-margin-after:0.5em">e.g. droBir1_annotations</h4>
