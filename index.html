@@ -50,6 +50,12 @@
 		
 	  </div>
       <div class="vertical layout left">
+            <div class="horizontal layout around-justified">
+                <paper-button onclick="template.selected = 1">Genome Upload</paper-button>
+                <paper-button onclick="template.selected = 2">Genome Search</paper-button>
+                <paper-button onclick="template.selected = 3">Annotation Upload</paper-button>
+            </div>
+                <h1>Genome Upload</h1>
                 <h3>What is the genus and species name of the source organism? (e.g. <i>Drosophila, birchii</i>)</h3>
             <div class="horizontal layout">
                 <paper-input floatingLabel label="Genus" style="margin-right:3px"></paper-input>  
@@ -69,28 +75,33 @@
             </div>
             <h3>What is the taxonomy ID? (*optional)</h3>
             <paper-input label="taxonomy ID"></paper-input>
-            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();">Save (*.fa/*.fasta)</paper-button>
+            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();">Select (*.fa/*.fasta)</paper-button>
+            <paper-button>Upload</paper-button>
           </div>
           
           <div class="vertical layout center">
               <h1>Genome Name Database</h1>
+              <template is='dom-bind' id="genomeTemplate">
+                <paper-input id="search_input" value="{{search_val}}"></paper-input>
+              
               <vaadin-grid style="width:800px" id="genomeGrid">
                 <table>
                     <colgroup>
-                        <col header-text="Name" sortable="true">
-                        <col header-text="Version" sortable="true">
+                        <col header-text="Name" name="name" sortable="true">
+                        <col header-text="Version" name="abbrev" sortable="true">
                     </colgroup>
 		    <tbody>
-			<template is='dom-repeat' items="[[genomes]]">
+			<template is='dom-repeat' items="[[genomes]]" as='genome'>
 				<tr>
-					<td>{{item.name}}</td>
-					<td>{{item.abbrev}}</td>
-					<td><paper-button onclick="template.genome = {{item.abbrev}}; template.subselected = 3;">Add</paper-button></td>
+					<td>{{genome.name}}</td>
+					<td>{{genome.abbrev}}</td>
+					<td><paper-button style="background-color:#F50057;color:#fff" onclick="template.genome = {{item.abbrev}}; template.subselected = 3;">Add</paper-button></td>
 				</tr>
 			</template>
 		    </tbody>
                 </table>
               </vaadin-grid>
+                  </template>
           </div>
           <div class="vertical layout left">
               <h1>Annotation Upload</h1>
@@ -102,11 +113,10 @@
               <paper-input style="width:200px" label="long label"></paper-input>      
             <h3>What would you like to use as the short-form label? (e.g. Drosophila birchii RNASeq data)</h3>
               <paper-input style="width:200px" label="short label"></paper-input>
-            <paper-button>Save (*.bed)</paper-button>
-          </div>
-          <div class="vertical layout center">
-            <paper-input style="width:200px"></paper-input>
-            <paper-button></paper-button>
+            <div class="horizontal layout">
+                <paper-button>Select (*.bed)</paper-button>
+                <paper-button>Upload</paper-button>
+            </div>
           </div>
 	  <div>
             <iron-pages selected="{{subselected}}">
