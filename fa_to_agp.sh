@@ -47,7 +47,7 @@ BASE_NAME="$2" # eg droBir1
 AGP_FILE="$2".agp
 TWO_BIT_FILE="$2".2bit
 
-GB_SOURCE=/home/ubuntu/src/gb
+GB_SOURCE=/home/ubuntu/src
 
 # Step 2
 
