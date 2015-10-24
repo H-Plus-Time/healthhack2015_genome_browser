@@ -22,8 +22,6 @@ error()
   exit 1
 }
 
-echo "total $#"
-
 if [ $# != 2 ]; then
     echo "Usage: $0 <fa-file> <output-name>";
     echo "";
