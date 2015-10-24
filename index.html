@@ -62,14 +62,14 @@
             <div>Default Display location</div>
             <h3>Which scaffold should the browser default to?</h3>
             <paper-input label="scaffold number"></paper-input>
-            <h3>What range of the scaffold should thge browser default to? (e.g. 0-1000000)</h3>
+            <h3>What range of the scaffold should the browser default to? (e.g. 0-1000000)</h3>
             <div class="horizontal layout">
               <paper-input label="Start" type="number" style="margin-right:3px;width:100px"></paper-input>
               <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
             </div>
             <h3>What is the taxonomy ID? (*optional)</h3>
             <paper-input label="taxonomy ID"></paper-input>
-            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px">Save (*.fa/*.fasta)</paper-button>
+            <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();">Save (*.fa/*.fasta)</paper-button>
           </div>
           
           <div class="vertical layout center">

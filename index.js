@@ -72,7 +72,7 @@ connection.onopen = function(session) {
   if (!r.support) {
     console.log("Fatal: ResumableJS not supported!");
   } else {
-    r.assignBrowse([uploadButton]);
+    r.assignBrowse(uploadButton);
     r.on('fileAdded', function(file) {
       console.log('fileAdded', file);
       r.upload();
