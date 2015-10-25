@@ -9,7 +9,7 @@ from autobahn.twisted.util import sleep
 from autobahn.twisted.wamp import ApplicationSession
 from subprocess import Popen
 from sqlalchemy.ext.automap import automap_base
-
+import time
 
 
 class GenomeBrowser(ApplicationSession):
@@ -58,9 +58,27 @@ class GenomeBrowser(ApplicationSession):
         def fetch_genomes():
             genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(self.Genome).all())
             return genomes
+        
+        def process_genome(form_data):
+            print form_data
+            out_string = '"description";"organism";"defaultPos";"genome";"scientificName";"sourceName";"taxId"\n"{}";'.format(form_data['description'])
+            out_string += '"{}";"{}";"{}";"{}";"{}";{}'.format(form_data['organism'], form_data['defaultPos'], form_data['genome'], form_data['scientificName'], form_data['sourceName'], str(form_data['taxId']))
+            with open('naming.csv', 'w') as f:
+                f.write(out_string)
+                
+            p = Popen('./genome_dep.py')
+        
+        def process_annotation(form_data):
+            ra_string = 'track {}\ntype bed {}\nshortLabel {}\nlongLabel {}'.format(form_data['name'], form_data['b_version'], form_data['short'], form_data['long'])
+            ra_filename = '{}{}.ra'.format(time.time(), form_data['name'])
+            with open(ra_filename, 'w') as f:
+                f.write(ra_string)
+                
+            p = Popen('annotation_dep.py {} {} {} {}'.format(form_data['genome'], form_data['name'], form_data['bed_filename'], ra_filename))
 
         self.register(fetch_genomes, 'com.gb.fetch_genomes')
         self.register(fetch_taxon_id, 'com.gb.taxon_search')
         self.register(ping, 'com.gb.ping')
+        self.register(process_genome, 'com.gb.submit_genome')
 	while True:
 		yield sleep(1)
