@@ -25,7 +25,7 @@ error()
 }
 
 if [ $# != 2 ]; then
-    echo "Usage: $0 <fa-file> <output-name>";
+    echo "Usage: $0 <fa-file> <base-name>";
     echo "";
     echo "eg: fa_to_agp.sh D_birchii.scafSeq.fill.v1.0.fa droBir1"
     echo "";
@@ -35,7 +35,7 @@ if [ $# != 2 ]; then
 fi >&2
 
 if [ ! -f $1 ]; then
-    echo "Usage: $0 <fa-file> <output-name>";
+    echo "Usage: $0 <fa-file> <base-name>";
     echo "";
     echo "eg: fa_to_agp.sh D_birchii.scafSeq.fill.v1.0.fa droBir1"
     echo "";
@@ -183,6 +183,7 @@ echo "Removing the agp and 2bit files"
 rm "$AGP_FILE"
 rm "$TWO_BIT_FILE"
 
+# no one is sure why I wrote this - Lachlan
 echo "returning to the main script to build SQL statements"
 
 # Exeunt

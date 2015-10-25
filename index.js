@@ -55,7 +55,14 @@ connection.onopen = function(session) {
     }
     
     document.submitFasta = function() {
-        document.r.upload();
+        document.r.upload().then(
+		function(res) {
+			console.log('sdfsdfsdf');
+		},
+		function(err) {
+			console.log(err);
+		}
+);
     }
 
     landingAnnotation.addEventListener('click', function(e) {
