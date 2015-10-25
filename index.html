@@ -143,7 +143,7 @@
           <paper-input id="taxon_input" label="taxonomy ID" value="{{taxon_ID}}"></paper-input>
           <div class="horizontal layout">
           <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();document.getElementById('submitFasta').disabled = false; document.getElementById('submitFasta').style.backgroundColor='#3F51B5'">Select (*.fa/*.fasta)</paper-button>
-          <paper-button id="submitFasta" style="margin:3px" onclick="document.r.upload()" disabled>Upload</paper-button>
+          <paper-button id="submitFasta" style="margin:3px" onclick="document.submitFasta()" disabled>Upload</paper-button>
         </div>
         <grayband class='vertical layout center'>
         </div>
@@ -199,7 +199,7 @@
           <paper-textarea required auto-validate error-message="required" style="min-width:200px;max-width:400px;" maxlength="50" label="short label" rows="1" max-rows="4"></paper-textarea>
           <div class="horizontal layout">
             <paper-button style="background-color:#F50057;color:#fff;margin:2px;margin-top:20px" onclick="document.getElementById('uploadButton').click();document.getElementById('submitBED').disabled = false; document.getElementById('submitBED').style.backgroundColor='#3F51B5'">Select (*.bed)</paper-button>
-            <paper-button id="submitBED" disabled style="margin:2px;margin-top:20px" onclick="document.r.upload()">Upload</paper-button>
+            <paper-button id="submitBED" disabled style="margin:2px;margin-top:20px" onclick="document.submitBED()">Upload</paper-button>
           </div>
         </div>
         <div>
