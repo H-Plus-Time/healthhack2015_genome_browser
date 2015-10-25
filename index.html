@@ -20,6 +20,7 @@
   <link rel='import' href='bower_components/vaadin-grid/vaadin-grid.html'>
   <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
   <script src="bower_components/underscore/underscore.js"></script>`
+
 </head>
 
 <body unrespolved fullbleed layout vertical>
@@ -28,6 +29,12 @@
   <div id="templatewrapper" style="display: none;">
     <template is='dom-bind'>
       <style>
+
+      body {
+        font-family: helvetica;
+        margin: 0;
+        border: 0;
+      }
         .seqdata {
           -webkit-flex: 1;
           flex: 1;
@@ -41,13 +48,29 @@
           flex-direction: column;
         }
         .example_input {
-            color:#5e5e5e;
+            color:black;
             -webkit-margin-before:0.25em;
             -webkit-margin-after:0.5em;
         }
         .wizard_question_text {
             max-width:700px;
             -webkit-margin-after:0.255em;
+        }
+
+        grayband {
+          background-color: #A5D6A7
+;
+          width:100%;
+          margin: 0;
+          border: 0
+        }
+        whiteband
+        {background-color: white;
+          width: 100%;
+        img{
+          width:200%;
+        height: 200%; }
+
         }
       </style>
       <div class="sequencedetails" style="display: -webkit-flex; display: flex; height: 170px;">
@@ -64,10 +87,11 @@
     <div>
       <iron-pages selected="{{selected}}">
         <div class="vertical layout fit center-justified">
+          <img src="fileum.svg" alt="fly standing on logo" style ="svg">
           <h1 class="self-center">Upload a Genome or add an annotation to an existing genome</h1>
           <div class="horizontal layout center-justified">
-            <paper-button id="landingAnnotation" style="background-color:#F50057;color:#fff">Add Annotation</paper-button>
-            <paper-button id="landingGenome" style="background-color:#3F51B5;;color:#fff">Upload Genome</paper-button>
+            <paper-button id="landingAnnotation" style= "margin: 25px; padding: 25px; background-color:rgb(124, 178, 95);color:#fff">Add Annotation</paper-button>
+            <paper-button id="landingGenome" style="margin: 25px; padding: 25px; background-color:rgb(239, 53, 53);color:#fff">Upload Genome</paper-button>
           </div>
 
 
@@ -80,19 +104,29 @@
           </div>
           <paper-progress style="width:100%" value="{{progress}}"></paper-progress>
           <h1>Genome Upload</h1>
+          <grayband class='vertical layout center'>
           <h3 style="">What is the genus and species name of the source organism?</h3>
           <h4 class="example_input">e.g. <i>Drosophila, birchii</i></h4>
+
           <div class="horizontal layout">
+
             <paper-input id="genus_input" required auto-validate error-message="required" floatingLabel label="Genus" style="margin-right:3px" value="{{genusVal}}"></paper-input>
             <paper-input id="species_input" required auto-validate error-message="required" floatingLabel label="Species" onkeypress="document.detectEnter(event)" value="{{speciesVal}}"></paper-input>
             <paper-icon-button id="speciesCheckInd" style="margin-top:18px;margin-bottom:18px" onclick="document.checkSpecies()"  icon="search"></paper-icon-button>
           </div>
+        </grayband>
+
+          <whiteband class='vertical layout center'>
           <h3 class="wizard_question_text">What description would you like to use for this genome assembly?</h3>
           <h4 class="example_input">e.g. 2014 assembly version 1, with ABySS</h4>
           <paper-input required auto-validate error-message="required" label="description"></paper-input>
+          </whiteband>
+          <grayband class='vertical layout center'>
           <h3 class="wizard_question_text">What is the source of this genome assembly?</h3>
           <h4 class="example_input">e.g. Genomic Basis for Adaption to Climate Change Project</h4>
           <paper-input required auto-validate error-message="required" label="Source"></paper-input>
+        </grayband>
+        <whiteband class='vertical layout center'>
           <h3 class="wizard_question_text">Which scaffold region should Genome Browser display by default?</h3>
           <h4 class="example_input">e.g. scaffold<b>1</b>:<b>0</b>-<b>1000,000</b></h4>
           <paper-input label="scaffold number" type="number"></paper-input>
@@ -100,6 +134,9 @@
             <paper-input label="Start" type="number" style="margin-right:3px;width:100px"></paper-input>
             <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
           </div>
+        </whiteband>
+
+<grayband class='vertical layout center'>
           <h3 class="wizard_question_text">What is the taxonomy ID?
             <!-- <small style="color:#a60000">*optional</small> -->
           </h3>
@@ -108,6 +145,7 @@
           <paper-button id="uploadFasta" style="background-color:#F50057;margin:3px" onclick="document.getElementById('uploadButton').click();document.getElementById('submitFasta').disabled = false; document.getElementById('submitFasta').style.backgroundColor='#3F51B5'">Select (*.fa/*.fasta)</paper-button>
           <paper-button id="submitFasta" style="margin:3px" onclick="document.r.upload()" disabled>Upload</paper-button>
         </div>
+        <grayband class='vertical layout center'>
         </div>
 
         <div class="vertical layout center">
