@@ -48,6 +48,15 @@ connection.onopen = function(session) {
         }
       );
     }
+    
+    document.submitBED = function() {
+        document.r.upload();
+        
+    }
+    
+    document.submitFasta = function() {
+        document.r.upload();
+    }
 
     landingAnnotation.addEventListener('click', function(e) {
     	template.selected = 2;
