@@ -82,10 +82,13 @@ connection.onopen = function(session) {
 	  	return {'name': item[0], 'abbrev': item[1]}
 	  });
           template.genomes = res;
-          genomeTemplate.genomes = template.genomes;
 	  console.log(genomeGrid);
-          genomeGrid.items = genomeTemplate.genomes;
-          genomeGrid.clearCache(genomeTemplate.genomes.length);
+          genomeTemplate.genomes = _.filter(template.genomes, function(genome) {
+            console.log(genome);
+            if(genome.name.indexOf(genomeTemplate.search_val) > -1 || genome.abbrev.indexOf(genomeTemplate.search_val) > -1) {
+                return genome;
+            }
+        });
           console.log(res);
       },
       function(err) {
