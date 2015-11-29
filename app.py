@@ -62,8 +62,8 @@ class GenomeBrowser(ApplicationSession):
 
         def process_genome(form_data):
             print form_data
-            out_string = '"description";"organism";"defaultPos";"genome";"scientificName";"sourceName";"taxId"\n"{}";'.format(form_data['description'])
-            out_string += '"{}";"{}";"{}";"{}";"{}";{}'.format(form_data['organism'], form_data['defaultPos'], form_data['genome'], form_data['scientificName'], form_data['sourceName'], str(form_data['taxId']))
+            out_string = 'description;organism;defaultPos;genome;scientificName;sourceName;taxId\n{};'.format(form_data['description'])
+            out_string += '{};{};{};{};{};{}'.format(form_data['organism'], form_data['defaultPos'], form_data['genome'], form_data['scientificName'], form_data['sourceName'], str(form_data['taxId']))
             with open('naming.csv', 'w') as f:
                 f.write(out_string)
 
