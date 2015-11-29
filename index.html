@@ -25,7 +25,7 @@
 
 <body unrespolved fullbleed layout vertical>
   <button id="uploadButton" style="display: none;"></button>
-  <paper-toast id="toasty">{{toast_message}}</paper-toast>
+
   <div id="templatewrapper" style="display: none;">
     <template is='dom-bind'>
       <style>
@@ -84,6 +84,7 @@
   </template>
   </div>
   <template is="dom-bind" id="t">
+    <paper-toast id="toasty">{{toast_message}}</paper-toast>
     <div>
       <iron-pages selected="{{selected}}">
         <div class="vertical layout fit center-justified">

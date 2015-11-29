@@ -34,14 +34,6 @@ class GenomeBrowser(ApplicationSession):
     def onJoin(self, details):
         print "Session attached"
 
-        def upload_ref_genome(file_payload):
-            size = file_payload['size']
-            name = file_payload['name']
-            binary_payload = file_payload['file_string'].decode('base64')
-            save_path = reduce(os.path.join, [upload_path, str(last_modified) + "_" + name])
-            with open(save_path, "wb") as f:
-                f.write(binary_payload)
-
         def upload_bed(file_payload):
             pass
 
@@ -69,8 +61,8 @@ class GenomeBrowser(ApplicationSession):
 
             print out_string
             transactions = build_new_database.generate_sql_dict_from_csv('naming.csv')
-            build_new_database.execute_sql_queries(transactions)
-            return out_string
+            result = build_new_database.execute_sql_queries(transactions)
+            return {'toast': result}
 
         def process_annotation(form_data):
             ra_string = 'track {}\ntype bed {}\nshortLabel {}\nlongLabel {}'.format(form_data['name'], form_data['b_version'], form_data['short'], form_data['long'])

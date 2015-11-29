@@ -159,9 +159,11 @@ connection.onopen = function(session) {
         connection.session.call('com.gb.submit_genome', [payload]).then(
           function(res) {
             console.log(res);
+            template.toast_message = res['toast'];
           },
           function(err) {
             console.log(err);
+            template.toast_message = 'Unspecified error :S';
           }
         );
       }
