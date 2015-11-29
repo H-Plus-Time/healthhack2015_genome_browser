@@ -5,6 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from twisted.internet.task import LoopingCall
 from twisted.internet.defer import inlineCallbacks, returnValue
+from twisted.internet import protocol, utils
 from autobahn.twisted.util import sleep
 from autobahn.twisted.wamp import ApplicationSession
 from subprocess import Popen
@@ -62,7 +63,11 @@ class GenomeBrowser(ApplicationSession):
             print out_string
             transactions = build_new_database.generate_sql_dict_from_csv('naming.csv')
             result = build_new_database.execute_sql_queries(transactions)
-            return {'toast': result}
+            # if result == 1045:
+            #     return {'toast': result}
+
+            return utils.getProcessOutput('/bin/sh', ('-c', 'fa_to_agp.sh'))
+
 
         def process_annotation(form_data):
             ra_string = 'track {}\ntype bed {}\nshortLabel {}\nlongLabel {}'.format(form_data['name'], form_data['b_version'], form_data['short'], form_data['long'])

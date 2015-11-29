@@ -146,6 +146,8 @@ connection.onopen = function(session) {
     document.r.on('fileSuccess', function(file, message) {
       console.log('fileSuccess', file, message);
       if(document.uploadMode == 'fasta') {
+        template.toast_message = 'Genome upload complete';
+        toast.show();
         genomeName = template.genusVal.capitalizeFirstLetter() + " " + template.speciesVal.toLowerCase();
         console.log("upload Mode - FASTA");
         payload = {};
@@ -172,6 +174,8 @@ connection.onopen = function(session) {
       }
       else if (document.uploadMode == 'bed') {
         console.log('upload Mode - BED');
+        template.toast_message = 'Genome upload complete';
+        toast.show();
       }
       console.log(document.uploadMode);
       //console.log(document.r.files);

@@ -45,11 +45,11 @@ def execute_sql_queries(transactions):
         '''
         DELETE FROM `dbDb` where `orderKey` = 1 or `orderKey` =2
         '''
-        return 'Operation successful'
+        return 0
     except Exception as e:
         print e
         print "Opening database failed"
-        return 'Opening database failed'
+        return 1045
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
