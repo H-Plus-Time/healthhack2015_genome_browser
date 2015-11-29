@@ -18,6 +18,7 @@ connection.onopen = function(session) {
     taxonInput = document.getElementById('taxon_input');
     speciesCheckInd = document.getElementById('speciesCheckInd');
     description = document.getElementById('description');
+    toast = document.getElementById('toast');
     template = document.getElementById('t');
     String.prototype.capitalizeFirstLetter = function() {
       return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
@@ -160,10 +161,12 @@ connection.onopen = function(session) {
           function(res) {
             console.log(res);
             template.toast_message = res['toast'];
+            toast.show();
           },
           function(err) {
             console.log(err);
             template.toast_message = 'Unspecified error :S';
+            toast.show();
           }
         );
       }
