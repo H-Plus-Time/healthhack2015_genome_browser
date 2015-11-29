@@ -148,11 +148,11 @@ connection.onopen = function(session) {
         genomeName = template.genusVal.capitalizeFirstLetter() + template.speciesVal.toLowerCase();
         console.log("upload Mode - FASTA");
         payload = {};
-        payload['description'] = genome_description;
-        payload['organism'] = genomeName;
-        payload['defaultPos'] = scaffold_name + ":" + scaffold_start + "-" + scaffold_end;
-        payload['genome'] = genomeName;
-        payload['scientificName'] = genomeName;
+        payload['description'] = template.genome_description;
+        payload['organism'] = template.genomeName;
+        payload['defaultPos'] = template.scaffold_name + ":" + template.scaffold_start + "-" + template.scaffold_end;
+        payload['genome'] = template.genomeName;
+        payload['scientificName'] = template.genomeName;
         payload['sourceName'] = template.source_name;
         payload['taxId'] = template.taxon_ID;
         console.log(payload);
