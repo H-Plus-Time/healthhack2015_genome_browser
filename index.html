@@ -119,20 +119,20 @@
           <whiteband class='vertical layout center'>
           <h3 class="wizard_question_text">What description would you like to use for this genome assembly?</h3>
           <h4 class="example_input">e.g. 2014 assembly version 1, with ABySS</h4>
-          <paper-input required auto-validate error-message="required" label="description"></paper-input>
+          <paper-input required auto-validate error-message="required" label="description" value="{{genome_description}}"></paper-input>
           </whiteband>
           <grayband class='vertical layout center'>
           <h3 class="wizard_question_text">What is the source of this genome assembly?</h3>
           <h4 class="example_input">e.g. Genomic Basis for Adaption to Climate Change Project</h4>
-          <paper-input required auto-validate error-message="required" label="Source"></paper-input>
+          <paper-input required auto-validate error-message="required" label="Source" value="{{source_name}}"></paper-input>
         </grayband>
         <whiteband class='vertical layout center'>
           <h3 class="wizard_question_text">Which scaffold region should Genome Browser display by default?</h3>
           <h4 class="example_input">e.g. scaffold<b>1</b>:<b>0</b>-<b>1000,000</b></h4>
-          <paper-input label="scaffold number" type="number"></paper-input>
+          <paper-input label="Scaffold Name" value="{{scaffold_name}}"></paper-input>
           <div class="horizontal layout">
-            <paper-input label="Start" type="number" style="margin-right:3px;width:100px"></paper-input>
-            <paper-input label="End" type="number" style="margin-right:3px;width:100px"></paper-input>
+            <paper-input label="Start" type="number" style="margin-right:3px;width:100px" value="{{scaffold_start}}"></paper-input>
+            <paper-input label="End" type="number" style="margin-right:3px;width:100px" value="{{scaffold_end}}"></paper-input>
           </div>
         </whiteband>
 

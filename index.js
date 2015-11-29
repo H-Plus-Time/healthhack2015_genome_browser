@@ -17,7 +17,11 @@ connection.onopen = function(session) {
     genusInput = document.getElementById('genus_input');
     taxonInput = document.getElementById('taxon_input');
     speciesCheckInd = document.getElementById('speciesCheckInd');
+    description = document.getElementById('description');
     template = document.getElementById('t');
+    String.prototype.capitalizeFirstLetter = function() {
+      return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+    }
 
     document.r = new Resumable({
       target: 'upload',
@@ -141,7 +145,20 @@ connection.onopen = function(session) {
     document.r.on('fileSuccess', function(file, message) {
       console.log('fileSuccess', file, message);
       if(document.uploadMode == 'fasta') {
+        genomeName = template.genusVal.capitalizeFirstLetter() + template.speciesVal.toLowerCase();
         console.log("upload Mode - FASTA");
+        payload = {};
+        payload['description'] = genome_description;
+        payload['organism'] = genomeName;
+        payload['defaultPos'] = scaffold_name + ":" + scaffold_start + "-" + scaffold_end;
+        payload['genome'] = genomeName;
+        payload['scientificName'] = genomeName;
+        payload['sourceName'] = template.source_name;
+        payload['taxId'] = template.taxon_ID;
+        console.log(payload);
+      }
+      else if (document.uploadMode == 'bed') {
+        console.log('upload Mode - BED');
       }
       console.log(document.uploadMode);
       //console.log(document.r.files);
@@ -149,6 +166,7 @@ connection.onopen = function(session) {
       // and this user might want to reupload the file
       template.progress = 0;
       file.cancel();
+      document.uploadMode = 'none';
     });
     document.r.on('fileError', function(file, message) {
       console.log('fileError', file, message);
