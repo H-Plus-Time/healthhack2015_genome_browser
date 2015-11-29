@@ -26,24 +26,29 @@ def generate_sql_dict_from_csv(naming_csv):
 def execute_sql_queries(transactions):
     # Step 11
     # setting up the MySQL connection
-    print "opening database"
-    db = MySQLdb.connect(host="localhost", user="root", passwd="browser", db="hgcentral")
-    dbcursor = db.cursor()
-    return True
-    for trans in transactions:
-        for x,y in trans.iteritems():
-            print "%s: %s" % (x,y)
+    try:
+        print "opening database"
+        db = MySQLdb.connect(host="localhost", user="root", passwd="browser", db="hgcentral")
+        dbcursor = db.cursor()
+        return True
+        for trans in transactions:
+            for x,y in trans.iteritems():
+                print "%s: %s" % (x,y)
 
-        dbcursor.execute("""INSERT INTO dbDb (name, description, nibPath, organism, defaultPos, active, orderKey, genome, scientificName, htmlPath, hgNearOk, hgPbOk, sourceName, taxId) VALUES (%(name)s, %(desc)s, %(nib)s, %(organism)s, %(defaultPos)s, %(active)s, %(orderKey)s, %(genome)s, %(scientificName)s, %(htmlPath)s, %(hgNearOk)s, %(hgPbOk)s, %(sourceName)s, %(taxId)s)""", trans)
+            dbcursor.execute("""INSERT INTO dbDb (name, description, nibPath, organism, defaultPos, active, orderKey, genome, scientificName, htmlPath, hgNearOk, hgPbOk, sourceName, taxId) VALUES (%(name)s, %(desc)s, %(nib)s, %(organism)s, %(defaultPos)s, %(active)s, %(orderKey)s, %(genome)s, %(scientificName)s, %(htmlPath)s, %(hgNearOk)s, %(hgPbOk)s, %(sourceName)s, %(taxId)s)""", trans)
 
-        print "entered successfully into DBDB"
+            print "entered successfully into DBDB"
 
-        dbcursor.execute("""INSERT INTO defaultDb (genome, name) VALUES (%(genome)s, %(name)s)""", trans)
-        dbcursor.execute("""INSERT INTO genomeClade (genome, clade, priority) VALUES (%(genome)s, 'insect', 10)""", trans)
+            dbcursor.execute("""INSERT INTO defaultDb (genome, name) VALUES (%(genome)s, %(name)s)""", trans)
+            dbcursor.execute("""INSERT INTO genomeClade (genome, clade, priority) VALUES (%(genome)s, 'insect', 10)""", trans)
 
-    '''
-    DELETE FROM `dbDb` where `orderKey` = 1 or `orderKey` =2
-    '''
+        '''
+        DELETE FROM `dbDb` where `orderKey` = 1 or `orderKey` =2
+        '''
+    except Exception as e:
+        print e
+        print "Opening database failed"
+        return {"toast" : "The database does not appear to be available"}
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
