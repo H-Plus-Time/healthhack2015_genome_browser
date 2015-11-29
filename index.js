@@ -138,7 +138,7 @@ connection.onopen = function(session) {
     });
     document.r.on('fileSuccess', function(file, message) {
       console.log('fileSuccess', file, message);
-      console.log(document.r.files);
+      //console.log(document.r.files);
       // enable repeated upload since other user can delete the file on the server
       // and this user might want to reupload the file
       template.progress = 0;
