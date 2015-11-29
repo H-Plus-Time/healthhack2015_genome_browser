@@ -14,8 +14,7 @@ def generate_sql_dict_from_csv(naming_csv):
         header = reader.next()
         for rownum, row in enumerate(reader):
             print "reading data..."
-            print row
-            print row.split(";")
+            print row[0].split(";")
             sql_dict = { "name": "%s" % row[0], "desc": "%s" % row[1], "nib": "/gbdb/%s" % row[0], "organism": "%s" % row[2], "defaultPos": "%s" % row[3], "active": 1, "orderKey": rownum, "genome": "%s" % row[4], "scientificName": "%s" % row[5], "htmlPath": "/gbdb/%s/html/description.html" % row[0], "hgNearOk": 0, "hgPbOk": 0, "sourceName": "%s" % row[6], "taxId": "%s" % row[7] }
             transactions.append(sql_dict)
 
