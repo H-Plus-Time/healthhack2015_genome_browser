@@ -18,6 +18,17 @@ connection.onopen = function(session) {
     speciesCheckInd = document.getElementById('speciesCheckInd');
     template = document.getElementById('t');
 
+    document.r = new Resumable({
+      target: 'upload',
+      chunkSize: 1 * 512 * 1024,
+      forceChunkSize: true, // https://github.com/23/resumable.js/issues/51
+      simultaneousUploads: 4,
+      testChunks: true,
+      query: {
+        on_progress: 'com.example.upload.on_progress',
+        session: session.id
+      }
+    });
     document.detectEnter = function (event) {
     if (event.which == 13 || event.keyCode == 13) {
         document.checkSpecies();
@@ -48,12 +59,12 @@ connection.onopen = function(session) {
         }
       );
     }
-    
+
     document.submitBED = function() {
         document.r.upload();
-        
+
     }
-    
+
     document.submitFasta = function() {
         document.r.upload().then(
 		function(res) {
@@ -118,17 +129,6 @@ connection.onopen = function(session) {
     console.log('upload event received', pinfo.status, pinfo.chunk, pinfo.remaining, pinfo.total, pinfo.progress);
   });
 
-  document.r = new Resumable({
-    target: 'upload',
-    chunkSize: 1 * 512 * 1024,
-    forceChunkSize: true, // https://github.com/23/resumable.js/issues/51
-    simultaneousUploads: 4,
-    testChunks: true,
-    query: {
-      on_progress: 'com.example.upload.on_progress',
-      session: session.id
-    }
-  });
   if (!document.r.support) {
     console.log("Fatal: ResumableJS not supported!");
   } else {
@@ -138,7 +138,7 @@ connection.onopen = function(session) {
     });
     document.r.on('fileSuccess', function(file, message) {
       console.log('fileSuccess', file, message);
-      console.log(r.files);
+      console.log(document.r.files);
       // enable repeated upload since other user can delete the file on the server
       // and this user might want to reupload the file
       template.progress = 0;
