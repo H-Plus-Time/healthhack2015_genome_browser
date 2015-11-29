@@ -156,7 +156,7 @@ connection.onopen = function(session) {
         payload['sourceName'] = template.source_name;
         payload['taxId'] = template.taxon_ID;
         console.log(payload);
-        connection.session.call('com.gb.process_genome', [payload]).then(
+        connection.session.call('com.gb.submit_genome', [payload]).then(
           function(res) {
             console.log(res);
           },
