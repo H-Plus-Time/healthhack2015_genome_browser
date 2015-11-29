@@ -158,6 +158,7 @@ connection.onopen = function(session) {
         payload['scientificName'] = genomeName;
         payload['sourceName'] = template.source_name;
         payload['taxId'] = template.taxon_ID;
+        payload['filename'] = file.name;
         console.log(payload);
         connection.session.call('com.gb.submit_genome', [payload]).then(
           function(res) {
@@ -167,7 +168,7 @@ connection.onopen = function(session) {
           },
           function(err) {
             console.log(err);
-            template.toast_message = 'Unspecified error :S';
+            template.toast_message = err;
             toast.show();
           }
         );

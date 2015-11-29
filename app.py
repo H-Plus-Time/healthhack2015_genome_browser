@@ -65,8 +65,9 @@ class GenomeBrowser(ApplicationSession):
             result = build_new_database.execute_sql_queries(transactions)
             # if result == 1045:
             #     return {'toast': result}
-
-            return utils.getProcessOutput('/bin/sh', ('-c', 'fa_to_agp.sh'))
+            splitName = proc_row[1].split()
+            name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower() + str(435)
+            return utils.getProcessOutput('/bin/sh', ('-c', 'fa_to_agp.sh {}{}'.format(form_data['filename'], name)))
 
 
         def process_annotation(form_data):
