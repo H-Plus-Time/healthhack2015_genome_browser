@@ -158,7 +158,7 @@ connection.onopen = function(session) {
         payload['scientificName'] = genomeName;
         payload['sourceName'] = template.source_name;
         payload['taxId'] = template.taxon_ID;
-        payload['filename'] = file.name;
+        payload['filename'] = file.file.name;
         console.log(payload);
         connection.session.call('com.gb.submit_genome', [payload]).then(
           function(res) {
