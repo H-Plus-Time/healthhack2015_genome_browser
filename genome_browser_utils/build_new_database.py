@@ -15,7 +15,9 @@ def generate_sql_dict_from_csv(naming_csv):
         for rownum, row in enumerate(reader):
             print "reading data..."
             proc_row =  row[0].split(";")
-            sql_dict = { "name": "%s" % proc_row[0], "desc": "%s" % proc_row[1], "nib": "/gbdb/%s" % proc_row[0], "organism": "%s" % proc_row[2], "defaultPos": "%s" % proc_row[3], "active": 1, "orderKey": rownum, "genome": "%s" % proc_row[4], "scientificName": "%s" % proc_row[5], "htmlPath": "/gbdb/%s/html/description.html" % proc_row[0], "hgNearOk": 0, "hgPbOk": 0, "sourceName": "%s" % proc_row[6], "taxId": "%s" % proc_row[7] }
+            splitName = proc_row[1].split()
+            name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower() + str(435)
+            sql_dict = { "name": "%s" % name, "desc": "%s" % name, "nib": "/gbdb/%s" % name, "organism": "%s" % proc_row[1], "defaultPos": "%s" % proc_row[2], "active": 1, "orderKey": rownum, "genome": "%s" % proc_row[3], "scientificName": "%s" % proc_row[4], "htmlPath": "/gbdb/%s/html/description.html" % name, "hgNearOk": 0, "hgPbOk": 0, "sourceName": "%s" % proc_row[5], "taxId": "%s" % proc_row[6] }
             transactions.append(sql_dict)
 
     return transactions
