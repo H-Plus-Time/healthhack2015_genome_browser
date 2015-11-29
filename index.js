@@ -156,6 +156,14 @@ connection.onopen = function(session) {
         payload['sourceName'] = template.source_name;
         payload['taxId'] = template.taxon_ID;
         console.log(payload);
+        connection.session.call('com.gb.process_genome', [payload]).then(
+          function(res) {
+            console.log(res);
+          },
+          function(err) {
+            console.log(err);
+          }
+        );
       }
       else if (document.uploadMode == 'bed') {
         console.log('upload Mode - BED');
