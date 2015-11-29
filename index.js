@@ -145,14 +145,14 @@ connection.onopen = function(session) {
     document.r.on('fileSuccess', function(file, message) {
       console.log('fileSuccess', file, message);
       if(document.uploadMode == 'fasta') {
-        genomeName = template.genusVal.capitalizeFirstLetter() + template.speciesVal.toLowerCase();
+        genomeName = template.genusVal.capitalizeFirstLetter() + " " + template.speciesVal.toLowerCase();
         console.log("upload Mode - FASTA");
         payload = {};
         payload['description'] = template.genome_description;
-        payload['organism'] = template.genomeName;
+        payload['organism'] = genomeName;
         payload['defaultPos'] = template.scaffold_name + ":" + template.scaffold_start + "-" + template.scaffold_end;
-        payload['genome'] = template.genomeName;
-        payload['scientificName'] = template.genomeName;
+        payload['genome'] = genomeName;
+        payload['scientificName'] = genomeName;
         payload['sourceName'] = template.source_name;
         payload['taxId'] = template.taxon_ID;
         console.log(payload);
