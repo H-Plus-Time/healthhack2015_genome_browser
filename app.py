@@ -10,6 +10,7 @@ from autobahn.twisted.wamp import ApplicationSession
 from subprocess import Popen
 from sqlalchemy.ext.automap import automap_base
 import time
+from genome_browser_utils import build_new_database
 
 
 class GenomeBrowser(ApplicationSession):
@@ -67,8 +68,9 @@ class GenomeBrowser(ApplicationSession):
                 f.write(out_string)
 
             print out_string
+            transactions = build_new_database.generate_sql_dict_from_csv('naming.csv')
+            build_new_database.execute_sql_queries(transactions)
             return out_string
-            # p = Popen('./genome_dep.py')
 
         def process_annotation(form_data):
             ra_string = 'track {}\ntype bed {}\nshortLabel {}\nlongLabel {}'.format(form_data['name'], form_data['b_version'], form_data['short'], form_data['long'])
