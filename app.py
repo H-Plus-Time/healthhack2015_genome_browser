@@ -63,8 +63,8 @@ class GenomeBrowser(ApplicationSession):
             print out_string
             transactions = build_new_database.generate_sql_dict_from_csv('naming.csv')
             result = build_new_database.execute_sql_queries(transactions)
-            # if result == 1045:
-            #     return {'toast': result}
+            if result == 1045:
+                return {'toast': 'The database is improperly configured :('}
             splitName = form_data['organism'].split()
             name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower() + str(435)
             return utils.getProcessOutput('/bin/sh', ('-c', 'fa_to_agp.sh {} {}'.format(form_data['filename'], name)))
