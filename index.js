@@ -6,6 +6,7 @@ var connection = new autobahn.Connection({
 
 connection.onopen = function(session) {
 
+    document.uploadMode = 'none';
 //  uploadFasta = document.getElementById('uploadFasta');
 //  uploadBED = document.getElementById('uploadBED');
 //  uploadRa = document.getElementById('uploadRa');
@@ -66,6 +67,7 @@ connection.onopen = function(session) {
     }
 
     document.submitFasta = function() {
+      document.uploadMode = 'fasta';
         document.r.upload().then(
 		function(res) {
 			console.log('sdfsdfsdf');
@@ -138,6 +140,10 @@ connection.onopen = function(session) {
     });
     document.r.on('fileSuccess', function(file, message) {
       console.log('fileSuccess', file, message);
+      if(document.uploadMode == 'fasta') {
+        console.log("upload Mode - FASTA");
+      }
+      console.log(document.uploadMode);
       //console.log(document.r.files);
       // enable repeated upload since other user can delete the file on the server
       // and this user might want to reupload the file
