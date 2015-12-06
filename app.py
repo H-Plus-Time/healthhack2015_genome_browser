@@ -72,7 +72,8 @@ class GenomeBrowser(ApplicationSession):
                 return {'toast': 'The database is improperly configured :('}
             splitName = form_data['organism'].split()
             genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(self.Genome).all())
-            name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
+            print genomes
+	    name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
             prior_versions =  filter(lambda x: x.startswith(name), genomes)
             all=string.maketrans('','')
             nodigs=all.translate(all, string.digits)
