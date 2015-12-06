@@ -22,7 +22,8 @@ class GenomeBrowser(ApplicationSession):
         self.init()
 
     def init(self):
-        engine = create_engine("mysql+pymysql://root:mysqlroot@localhost/hgcentral")
+        engine = create_engine(
+            "mysql+pymysql://root:mysqlroot@localhost/hgcentral")
         Base = automap_base()
         Base.prepare(engine, reflect=True)
         Session = sessionmaker(bind=engine)
@@ -30,7 +31,6 @@ class GenomeBrowser(ApplicationSession):
         self.Genome = Base.classes.defaultDb
         Entrez.email = 'nicholas.roberts.au@gmail.com'
         pass
-
 
     @inlineCallbacks
     def onJoin(self, details):
@@ -51,50 +51,58 @@ class GenomeBrowser(ApplicationSession):
                 return -1
 
         def fetch_genomes():
-            genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(self.Genome).all())
+            genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(
+                self.Genome).all())
             return genomes
 
         def process_genome(form_data):
             print form_data
-            out_string = 'description;organism;defaultPos;genome;scientificName;sourceName;taxId\n{};'.format(form_data['description'])
+            out_string = 'description;organism;defaultPos;genome;scientificName;sourceName;taxId\n{};'.format(form_data[
+                                                                                                              'description'])
             genome = form_data['genome'].split()
-            normalized_genome = '{}. {}'.format(genome[0][0].upper(), genome[1].lower())
+            normalized_genome = '{}. {}'.format(
+                genome[0][0].upper(), genome[1].lower())
             print normalized_genome
-            out_string += '{};{};{};{};{};{}'.format(form_data['organism'], form_data['defaultPos'], normalized_genome, form_data['scientificName'], form_data['sourceName'], str(form_data['taxId']))
+            out_string += '{};{};{};{};{};{}'.format(form_data['organism'], form_data['defaultPos'], normalized_genome, form_data[
+                                                     'scientificName'], form_data['sourceName'], str(form_data['taxId']))
             with open('naming.csv', 'w') as f:
                 f.write(out_string)
 
             print out_string
-            transactions = build_new_database.generate_sql_dict_from_csv('naming.csv')
+            transactions = build_new_database.generate_sql_dict_from_csv(
+                'naming.csv')
             result = build_new_database.execute_sql_queries(transactions)
-	    print result
+            print result
             if result == 1045:
                 return {'toast': 'The database is improperly configured :('}
             splitName = form_data['organism'].split()
-            genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(self.Genome).all())
+            genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(
+                self.Genome).all())
             print genomes
-	    name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
-            prior_versions =  filter(lambda x: x.startswith(name), genomes)
-            all=string.maketrans('','')
-            nodigs=all.translate(all, string.digits)
+            name = splitName[0][
+                :3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
+            prior_versions = filter(lambda x: x.startswith(name), map(lambda x: x['name'], genomes))
+            all = string.maketrans('', '')
+            nodigs = all.translate(all, string.digits)
             if name in prior_versions:
                 name += str(max(map(lambda x: int(x.translate(all, nodigs)), prior_versions)))
             else:
                 name += '0'
             return utils.getProcessOutput('/bin/sh', ('-c', 'fa_to_agp.sh {} {}'.format(form_data['filename'], name)))
 
-
         def process_annotation(form_data):
-            ra_string = 'track {}\ntype bed {}\nshortLabel {}\nlongLabel {}'.format(form_data['name'], form_data['b_version'], form_data['short'], form_data['long'])
+            ra_string = 'track {}\ntype bed {}\nshortLabel {}\nlongLabel {}'.format(
+                form_data['name'], form_data['b_version'], form_data['short'], form_data['long'])
             ra_filename = '{}{}.ra'.format(time.time(), form_data['name'])
             with open(ra_filename, 'w') as f:
                 f.write(ra_string)
 
-            p = Popen('annotation_dep.py {} {} {} {}'.format(form_data['genome'], form_data['name'], form_data['bed_filename'], ra_filename))
+            p = Popen('annotation_dep.py {} {} {} {}'.format(
+                form_data['genome'], form_data['name'], form_data['bed_filename'], ra_filename))
 
         self.register(fetch_genomes, 'com.gb.fetch_genomes')
         self.register(fetch_taxon_id, 'com.gb.taxon_search')
         self.register(ping, 'com.gb.ping')
         self.register(process_genome, 'com.gb.submit_genome')
-	while True:
-		yield sleep(1)
+        while True:
+            yield sleep(1)
