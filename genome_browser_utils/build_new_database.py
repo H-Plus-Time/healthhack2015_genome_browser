@@ -44,7 +44,7 @@ def generate_sql_dict_from_csv(naming_csv):
             if name in prior_versions:
                 name += str(max(map(lambda x: int(x.translate(all, nodigs)), prior_versions)) + 1)
             else:
-                name += '0'
+                name += '1'
             sql_dict = { "name": "%s" % name, "desc": "%s" % name, "nib": "/gbdb/%s" % name, "organism": "%s" % proc_row[1], "defaultPos": "%s" % proc_row[2], "active": 1, "orderKey": rownum, "genome": "%s" % proc_row[3], "scientificName": "%s" % proc_row[4], "htmlPath": "/gbdb/%s/html/description.html" % name, "hgNearOk": 0, "hgPbOk": 0, "sourceName": "%s" % proc_row[5], "taxId": "%s" % proc_row[6] }
             transactions.append(sql_dict)
 

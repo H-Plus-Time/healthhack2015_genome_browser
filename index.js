@@ -239,6 +239,29 @@ document.addEventListener('WebComponentsReady', function() {
 //        genomeGrid.clearCache(genomeTemplate.genomes.length);
     });
 
+    document.getElementById('uploadFasta').addEventListener('keypress', function() {
+      if (event.which == 13 || event.keyCode == 13) {
+        document.getElementById('uploadButton').click();
+        document.getElementById('submitFasta').disabled = false;
+        document.getElementById('submitFasta').style.backgroundColor='#3F51B5';
+          return false;
+      }
+      return true;
+    });
+
+    document.getElementById('uploadFasta').addEventListener('click', function() {
+      document.getElementById('uploadButton').click();
+      document.getElementById('submitFasta').disabled = false;
+      document.getElementById('submitFasta').style.backgroundColor='#3F51B5';
+    });
+
+    document.getElementById('submitFasta').addEventListener('keypress', function() {
+      if (event.which == 13 || event.keyCode == 13) {
+        document.submitFasta();
+      }
+      return true;
+    });
+
     // genomeGrid.rowDetailsGenerator = function(rowIndex) {
     //     var elem = document.createElement('div');
     //     elem.setAttribute('class', 'featurenamedetailswrapper');
