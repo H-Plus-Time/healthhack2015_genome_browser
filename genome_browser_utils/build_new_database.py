@@ -13,6 +13,7 @@ from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, Foreign
 from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.automap import automap_base
 
 
 def generate_sql_dict_from_csv(naming_csv):
