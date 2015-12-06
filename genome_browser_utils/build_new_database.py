@@ -9,6 +9,13 @@ import string
 
 def generate_sql_dict_from_csv(naming_csv):
     transactions = []
+    engine = create_engine(
+        "mysql+pymysql://root:mysqlroot@localhost/hgcentral")
+    Base = automap_base()
+    Base.prepare(engine, reflect=True)
+    Session = sessionmaker(bind=engine)
+    self.db = Session()
+    self.Genome = Base.classes.defaultDb
     with open(naming_csv, 'rb') as f:
         reader = csv.reader(f)
         print "reading headers..."
