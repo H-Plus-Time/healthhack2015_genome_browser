@@ -23,8 +23,8 @@ def generate_sql_dict_from_csv(naming_csv):
     Base = automap_base()
     Base.prepare(engine, reflect=True)
     Session = sessionmaker(bind=engine)
-    self.db = Session()
-    self.Genome = Base.classes.defaultDb
+    db = Session()
+    Genome = Base.classes.defaultDb
     with open(naming_csv, 'rb') as f:
         reader = csv.reader(f)
         print "reading headers..."
@@ -34,6 +34,8 @@ def generate_sql_dict_from_csv(naming_csv):
             proc_row =  row[0].split(";")
 	    print len(proc_row)
             splitName = proc_row[1].split()
+            genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, db.query(
+                Genome).all())
             name = splitName[0][
                 :3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
             prior_versions = filter(lambda x: not x.startswith(name), map(lambda x: x['name'], genomes))
