@@ -28,9 +28,8 @@ def execute_sql_queries(transactions):
     # setting up the MySQL connection
     try:
         print "opening database"
-        db = MySQLdb.connect(host="localhost", user="root", passwd="browser", db="hgcentral")
+        db = MySQLdb.connect(host="localhost", user="root", passwd="mysqlroot", db="hgcentral")
         dbcursor = db.cursor()
-        return True
         for trans in transactions:
             for x,y in trans.iteritems():
                 print "%s: %s" % (x,y)

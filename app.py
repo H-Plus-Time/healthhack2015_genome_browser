@@ -63,6 +63,7 @@ class GenomeBrowser(ApplicationSession):
             print out_string
             transactions = build_new_database.generate_sql_dict_from_csv('naming.csv')
             result = build_new_database.execute_sql_queries(transactions)
+	    print result
             if result == 1045:
                 return {'toast': 'The database is improperly configured :('}
             splitName = form_data['organism'].split()
