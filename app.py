@@ -81,11 +81,11 @@ class GenomeBrowser(ApplicationSession):
             print genomes
             name = splitName[0][
                 :3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
-            prior_versions = filter(lambda x: x.startswith(name), map(lambda x: x['name'], genomes))
+            prior_versions = filter(lambda x: not x.startswith(name), map(lambda x: x['name'], genomes))
             all = string.maketrans('', '')
             nodigs = all.translate(all, string.digits)
             if name in prior_versions:
-                name += str(max(map(lambda x: int(x.translate(all, nodigs)), prior_versions)))
+                name += str(max(map(lambda x: int(x.translate(all, nodigs)), prior_versions)) + 1)
             else:
                 name += '0'
             return utils.getProcessOutput('/bin/sh', ('-c', 'fa_to_agp.sh {} {}'.format(form_data['filename'], name)))
