@@ -5,6 +5,7 @@ import re
 import os
 import csv
 import sys
+import string
 
 def generate_sql_dict_from_csv(naming_csv):
     transactions = []
@@ -17,7 +18,15 @@ def generate_sql_dict_from_csv(naming_csv):
             proc_row =  row[0].split(";")
 	    print len(proc_row)
             splitName = proc_row[1].split()
-            name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower() + str(435)
+            name = splitName[0][
+                :3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
+            prior_versions = filter(lambda x: not x.startswith(name), map(lambda x: x['name'], genomes))
+            all = string.maketrans('', '')
+            nodigs = all.translate(all, string.digits)
+            if name in prior_versions:
+                name += str(max(map(lambda x: int(x.translate(all, nodigs)), prior_versions)) + 1)
+            else:
+                name += '0'
             sql_dict = { "name": "%s" % name, "desc": "%s" % name, "nib": "/gbdb/%s" % name, "organism": "%s" % proc_row[1], "defaultPos": "%s" % proc_row[2], "active": 1, "orderKey": rownum, "genome": "%s" % proc_row[3], "scientificName": "%s" % proc_row[4], "htmlPath": "/gbdb/%s/html/description.html" % name, "hgNearOk": 0, "hgPbOk": 0, "sourceName": "%s" % proc_row[5], "taxId": "%s" % proc_row[6] }
             transactions.append(sql_dict)
 
