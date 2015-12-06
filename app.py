@@ -11,6 +11,7 @@ from autobahn.twisted.wamp import ApplicationSession
 from subprocess import Popen
 from sqlalchemy.ext.automap import automap_base
 import time
+import string
 from genome_browser_utils import build_new_database
 
 
@@ -70,7 +71,15 @@ class GenomeBrowser(ApplicationSession):
             if result == 1045:
                 return {'toast': 'The database is improperly configured :('}
             splitName = form_data['organism'].split()
-            name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower() + str(435)
+            genomes = map(lambda x: {'name': x.name, 'abbrev': x.genome}, self.db.query(self.Genome).all())
+            name = splitName[0][:3].lower() + splitName[1][0].upper() + splitName[1][1:3].lower()
+            prior_versions =  filter(lambda x: x.startswith(name), genomes)
+            all=string.maketrans('','')
+            nodigs=all.translate(all, string.digits)
+            if name in prior_versions:
+                name += str(max(map(lambda x: int(x.translate(all, nodigs)), prior_versions)))
+            else:
+                name += '0'
             return utils.getProcessOutput('/bin/sh', ('-c', 'fa_to_agp.sh {} {}'.format(form_data['filename'], name)))
 
 
