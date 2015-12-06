@@ -6,6 +6,14 @@ import os
 import csv
 import sys
 import string
+from sqlalchemy import create_engine, desc
+
+from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean, ForeignKey, MetaData
+
+from sqlalchemy.ext.declarative import declarative_base
+
+from sqlalchemy.orm import sessionmaker
+
 
 def generate_sql_dict_from_csv(naming_csv):
     transactions = []
